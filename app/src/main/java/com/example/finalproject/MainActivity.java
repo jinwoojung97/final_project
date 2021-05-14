@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         String ttst = "브랜치";
         String shy = "송호영";
         String jjw = "정진우";
+        String ddd = "정용현";
 
 
 

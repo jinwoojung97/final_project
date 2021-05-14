@@ -15,8 +15,10 @@ public class MainActivity extends AppCompatActivity {
         String jjy = "전준엽";
         String sdk = "송댁완";
         String kgy = "김가연";
+        String ttst = "브랜치";
         String shy = "송호영";
-        String ddd = "정용현";
+        String jjw = "정진우";
+
 
     }
 }

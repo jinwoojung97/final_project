@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         String test = "test";
+        String jjy = "전준엽";
 
     }
 }

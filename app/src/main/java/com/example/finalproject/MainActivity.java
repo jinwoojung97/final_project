@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         String shy = "송호영";
         String jjw = "정진우";
         String ddd = "정용현";
+        String jjjiiinnnn = "정진정진우";
 
 
 

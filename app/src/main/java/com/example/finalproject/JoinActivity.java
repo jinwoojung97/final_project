@@ -2,10 +2,12 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +21,13 @@ public class JoinActivity extends AppCompatActivity {
     Spinner spinner_region; //지역 선택 스피너
     ArrayList<String> regions;
     TextView tv_region;
+    Button btn_joinjoin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
+        btn_joinjoin=findViewById(R.id.btn_joinjoin);
         tv_region=findViewById(R.id.tv_region);
         spinner_region=findViewById(R.id.spinner_region);
         regions = new ArrayList<>();
@@ -58,6 +62,13 @@ public class JoinActivity extends AppCompatActivity {
         });
 
 
+        btn_joinjoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 

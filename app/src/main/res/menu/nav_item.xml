@@ -4,22 +4,23 @@
 
     <item
         android:id="@+id/item_home"
-        android:icon="@android:drawable/ic_menu_mapmode"
+        android:icon="@drawable/home_icon"
         android:title="home" />
     <item
         android:id="@+id/item_point"
-        android:icon="@android:drawable/ic_menu_myplaces"
+        android:icon="@drawable/coin_icon"
         android:title="point" />
     <item
         android:id="@+id/item_camera"
-        android:icon="@android:drawable/ic_menu_camera"
+        android:icon="@drawable/cam_icon"
         android:title="camera" />
     <item
         android:id="@+id/item_rank"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:icon="@drawable/rank_icon"
         android:title="rank" />
     <item
         android:id="@+id/item_mypage"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:title="mypage" />
+        android:icon="@drawable/mypage_icon"
+        android:title="mypage"
+        android:visible="true" />
 </menu>

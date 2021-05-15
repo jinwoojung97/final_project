@@ -5,22 +5,22 @@
     <item
         android:id="@+id/item_home"
         android:icon="@drawable/home_icon"
-        android:title="home" />
+        android:title="홈" />
     <item
         android:id="@+id/item_point"
         android:icon="@drawable/coin_icon"
-        android:title="point" />
+        android:title="포인트" />
     <item
         android:id="@+id/item_camera"
         android:icon="@drawable/cam_icon"
-        android:title="camera" />
+        android:title="카메라" />
     <item
         android:id="@+id/item_rank"
         android:icon="@drawable/rank_icon"
-        android:title="rank" />
+        android:title="우리 동네 랭킹" />
     <item
         android:id="@+id/item_mypage"
         android:icon="@drawable/mypage_icon"
-        android:title="mypage"
+        android:title="마이페이지"
         android:visible="true" />
 </menu>

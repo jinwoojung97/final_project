@@ -66,9 +66,9 @@
                 android:textColor="#262626"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/imageView8"
+                app:layout_constraintEnd_toEndOf="@+id/img_rank"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/imageView8"
+                app:layout_constraintStart_toStartOf="@+id/img_rank"
                 app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
             <ImageView
@@ -152,7 +152,7 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView7" />
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/img_rank"
                 android:layout_width="360dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="52dp"
@@ -175,7 +175,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/tv_region_point"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_region_point"
-                app:layout_constraintTop_toTopOf="@+id/imageView8" />
+                app:layout_constraintTop_toTopOf="@+id/img_rank" />
 
             <TextView
                 android:id="@+id/tv_region_point"
@@ -187,8 +187,25 @@
                 android:text="100,538,459p"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-                app:layout_constraintStart_toStartOf="@+id/imageView8" />
+                app:layout_constraintBottom_toBottomOf="@+id/img_rank"
+                app:layout_constraintStart_toStartOf="@+id/img_rank" />
+
+            <TextView
+                android:id="@+id/tv_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="52dp"
+                android:layout_marginRight="52dp"
+                android:text="1등"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/img_rank"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tv_region"
+                app:layout_constraintTop_toTopOf="@+id/img_rank"
+                app:layout_constraintVertical_bias="0.514" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

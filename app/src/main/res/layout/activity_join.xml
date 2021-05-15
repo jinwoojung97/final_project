@@ -13,8 +13,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/white" />
 
     <ImageView
@@ -45,14 +47,15 @@
         android:id="@+id/editTextTextPersonName2"
         android:layout_width="289dp"
         android:layout_height="39dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="아이디를 입력해주세요"
         android:inputType="textPersonName"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        tools:layout_editor_absoluteY="224dp" />
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <TextView
         android:id="@+id/textView3"
@@ -61,8 +64,8 @@
         android:text="TextView"
         android:textColor="#FF0000"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="263dp" />
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
 
     <TextView
         android:id="@+id/textView5"
@@ -71,8 +74,8 @@
         android:text="TextView"
         android:textColor="#FF0000"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="348dp" />
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
 
     <TextView
         android:id="@+id/textView7"
@@ -81,18 +84,20 @@
         android:text="TextView"
         android:textColor="#FF0000"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="433dp" />
+        app:layout_constraintStart_toStartOf="@+id/editTextPhone"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
         android:text="회원가입"
         android:textStyle="bold"
         app:backgroundTint="#2ECC71"
-        tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="567dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_region"
+        app:layout_constraintStart_toStartOf="@+id/spinner_region" />
 
     <TextView
         android:id="@+id/textView4"
@@ -102,8 +107,8 @@
         android:textColor="#262626"
         android:textSize="16sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="288dp" />
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword2"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword2" />
 
     <TextView
         android:id="@+id/textView6"
@@ -113,40 +118,54 @@
         android:textColor="#262626"
         android:textSize="16sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="373dp" />
+        app:layout_constraintBottom_toTopOf="@+id/editTextPhone"
+        app:layout_constraintStart_toStartOf="@+id/editTextPhone" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/tv_region"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="지역"
         android:textColor="#262626"
         android:textSize="16sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="456dp" />
+        app:layout_constraintBottom_toTopOf="@+id/spinner_region"
+        app:layout_constraintStart_toStartOf="@+id/spinner_region" />
 
     <EditText
         android:id="@+id/editTextTextPassword2"
         android:layout_width="289dp"
         android:layout_height="39dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="비밀번호를 입력해주세요"
         android:inputType="textPassword"
         android:textSize="14sp"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="310dp" />
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
 
     <EditText
         android:id="@+id/editTextPhone"
         android:layout_width="289dp"
         android:layout_height="39dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:hint="ex) 010-1234-5678"
         android:inputType="phone"
         android:textSize="14sp"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="395dp" />
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword2"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
+
+    <Spinner
+        android:id="@+id/spinner_region"
+        android:layout_width="289dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPhone"
+        app:layout_constraintStart_toStartOf="@+id/editTextPhone"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

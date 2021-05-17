@@ -51,9 +51,12 @@ public class HomeFragment extends Fragment {
         btn_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.executeMove(R.id.item_camera);
-                CameraFragment cameraFragment = new CameraFragment();
-                executeFragment(cameraFragment);
+//                MainActivity.executeMove(R.id.item_camera);
+//                CameraFragment cameraFragment = new CameraFragment();
+//                executeFragment(cameraFragment);
+
+                Intent intent = new Intent(getContext(), CameraActivity.class);
+                startActivity(intent);
 
             }
         });

@@ -24,17 +24,30 @@
             android:id="@+id/tv_region_mypage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="73dp"
+            android:layout_marginLeft="73dp"
+            android:layout_marginTop="184dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="118dp"
             android:text="지역"
             android:textSize="24sp"
-            tools:layout_editor_absoluteX="73dp"
-            tools:layout_editor_absoluteY="509dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/spinner_region_mypage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
         <Spinner
             android:id="@+id/spinner_region_mypage"
             android:layout_width="210dp"
             android:layout_height="40dp"
-            tools:layout_editor_absoluteX="142dp"
-            tools:layout_editor_absoluteY="501dp" />
+            android:layout_marginTop="176dp"
+            android:layout_marginEnd="59dp"
+            android:layout_marginRight="59dp"
+            android:layout_marginBottom="118dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
         <TextView
             android:id="@+id/tv_mypage_id"

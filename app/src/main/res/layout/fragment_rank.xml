@@ -4,103 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RankFragment">
+    tools:context=".HomeFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FC533C">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FC533C">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:layout_marginEnd="104dp"
-                android:layout_marginRight="104dp"
-                android:text="우리동네 랭킹"
-                android:textColor="@color/white"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="446dp"
-                android:layout_height="717dp"
-                android:src="@drawable/rankview"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="108dp" />
-
-            <ImageView
-                android:id="@+id/imageView11"
-                android:layout_width="96dp"
-                android:layout_height="85dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="48dp"
-                android:src="@drawable/success"
-                app:layout_constraintEnd_toStartOf="@+id/textView11"
-                app:layout_constraintHorizontal_bias="0.105"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_whendate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2021년 06월 07일"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                tools:layout_editor_absoluteX="108dp"
-                tools:layout_editor_absoluteY="183dp" />
-
-            <Button
-                android:id="@+id/btn_graph"
-                android:layout_width="196dp"
-                android:layout_height="58dp"
-                android:layout_marginBottom="3dp"
-                android:text="그래프보기"
+                android:layout_marginTop="40dp"
+                android:text="랭킹"
+                android:textColor="#262626"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintBottom_toTopOf="@+id/imageView6"
+                app:layout_constraintEnd_toEndOf="@+id/imageView6"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView6"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="광주광역시 구별 재활용 통계"
-                android:textColor="@color/white"
-                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:text="알쓸쓰잡"
+                android:textColor="#1CBC9D"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textView11"
-                app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-            <ListView
-                android:id="@+id/rank_lv"
-                android:layout_width="388dp"
-                android:layout_height="498dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/btn_graph"
-                app:layout_constraintEnd_toEndOf="@+id/imageView10"
-                app:layout_constraintHorizontal_bias="0.551"
-                app:layout_constraintStart_toStartOf="@+id/imageView10"
-                app:layout_constraintTop_toBottomOf="@+id/tv_whendate"
-                app:layout_constraintVertical_bias="0.0"
-                tools:listitem="@layout/rank_list_item" />
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -1,13 +1,17 @@
 package com.example.finalproject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,7 +26,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView navi;
+    public static BottomNavigationView navi;
     HomeFragment homeFragment;
     PointFragment pointFragment;
     CameraFragment cameraFragment;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     MyPageFragment myPageFragment;
 
     Button btn_camera;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +76,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public static void executeMove(int id){
+        navi.setSelectedItemId(id);
+    }
+
     private void executeFragment(Fragment fragment) {
         //replace(FrameLayout id명, Fragment객체): FrameLayout에 Fragment화면을 설정
         getSupportFragmentManager().beginTransaction().replace(R.id.frame,fragment).commit();
     }
+
 }

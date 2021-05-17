@@ -1,7 +1,15 @@
 package com.example.finalproject;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,19 +18,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class HomeFragment extends Fragment {
 
+    private final int POINTDATA = 1001;
+
     TextView tv_quiz, tv_region, tv_region_point, tv_rank;
     Button btn_camera, btn_yes, btn_no;
     ImageView img_rank;
+    Context activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+//        / Inflate the layout for this fragment
         View fragment = inflater.inflate(R.layout.fragment_home, container, false);
+
+        activity = container.getContext();
 
         tv_quiz = fragment.findViewById(R.id.tv_quiz);
         tv_region = fragment.findViewById(R.id.tv_region);
@@ -47,7 +61,10 @@ public class HomeFragment extends Fragment {
         btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), PopupActivity.class);
+                intent.putExtra("data","정답입니다");
+                intent.putExtra("result","1");
+                startActivityForResult(intent, POINTDATA);
             }
         });
 
@@ -55,7 +72,10 @@ public class HomeFragment extends Fragment {
         btn_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), PopupActivity.class);
+                intent.putExtra("data","오답입니다");
+                intent.putExtra("result","2");
+                startActivityForResult(intent, POINTDATA);
             }
         });
 
@@ -63,11 +83,66 @@ public class HomeFragment extends Fragment {
         img_rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MainActivity.executeMove(R.id.item_rank);
+                RankFragment rankFragment = new RankFragment();
+                executeFragment(rankFragment);
             }
         });
 
 
         return fragment;
     };
+
+    private void executeFragment(Fragment fragment) {
+        //replace(FrameLayout id명, Fragment객체): FrameLayout에 Fragment화면을 설정
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame,fragment).commit();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == POINTDATA) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra("result");
+                //디비 정답성공
+                Toast.makeText(activity, result, Toast.LENGTH_SHORT).show();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                String result = data.getStringExtra("result");
+                //디비 정답실패
+                Toast.makeText(activity, result, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void msPopup() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        builder.setTitle("버튼 추가 예제").setMessage("선택하세요.");
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(activity, "OK Click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(activity, "Cancel Click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNeutralButton("Neutral", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(activity, "Neutral Click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }

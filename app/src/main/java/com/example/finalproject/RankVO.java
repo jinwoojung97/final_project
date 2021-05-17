@@ -2,10 +2,10 @@ package com.example.finalproject;
 
 public class RankVO {
 
-    private int img_medal;
-    private String rank_region;
-    private String rank_count;
-    private String rank_total;
+    private int img_medal; //메달 색깔
+    private String rank_region; //지역
+    private String rank_count; // 사람 수
+    private String rank_total; //포인트
 
     public RankVO(int img_medal, String rank_region, String rank_count, String rank_total) {
         this.img_medal = img_medal;

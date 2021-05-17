@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     RankFragment rankFragment;
     MyPageFragment myPageFragment;
 
+    Button btn_camera;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         cameraFragment = new CameraFragment();
         rankFragment = new RankFragment();
         myPageFragment = new MyPageFragment();
+
+        btn_camera = findViewById(R.id.btn_camera);
 
         executeFragment(homeFragment);
 

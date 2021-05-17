@@ -65,6 +65,6 @@ public class RankAdapter  extends BaseAdapter {
 
 
 
-        return null;
+        return convertView;
     }
 }

@@ -20,8 +20,8 @@
                 android:id="@+id/imageView5"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginLeft="36dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
                 android:layout_marginTop="52dp"
                 android:src="@drawable/success"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +42,7 @@
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:text="광주광역시 구별 재활용 통계"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
@@ -50,8 +51,8 @@
 
             <ImageView
                 android:id="@+id/imageView10"
-                android:layout_width="349dp"
-                android:layout_height="582dp"
+                android:layout_width="367dp"
+                android:layout_height="607dp"
                 android:src="@drawable/rankview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -75,22 +76,22 @@
                 android:id="@+id/rank_lv"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="108dp"
+                android:layout_marginTop="120dp"
                 android:layout_marginBottom="70dp"
+                android:divider="#FFFFFF"
                 android:dividerHeight="0px"
                 android:footerDividersEnabled="false"
                 android:headerDividersEnabled="false"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView10"
                 app:layout_constraintEnd_toEndOf="@+id/imageView10"
+                app:layout_constraintHorizontal_bias="0.0"
+
+
                 app:layout_constraintStart_toStartOf="@+id/imageView10"
+
+
                 app:layout_constraintTop_toBottomOf="@+id/textView17"
-
-
-                android:divider="#FFFFFF"
-
-
-
-                />
+                app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

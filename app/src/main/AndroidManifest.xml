@@ -16,14 +16,15 @@
         <activity android:name=".CameraActivity"></activity>
         <activity android:name=".PermissionActivity" />
         <activity android:name=".JoinActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 팝업 Activity -->
+        </activity>
+        <activity android:name=".MainActivity"></activity>
+        <!-- 팝업 Activity -->
         <activity
             android:name=".PopupActivity"
             android:theme="@android:style/Theme.Dialog" />

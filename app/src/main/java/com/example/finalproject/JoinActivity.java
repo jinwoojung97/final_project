@@ -143,7 +143,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     String key = postSnapshot.getKey();
                     MembersVO get = postSnapshot.getValue(MembersVO.class);
-                    String[] info = {get.member_id, get.member_pw, get.member_phone};
+                    String[] info = {get.member_id, get.member_pw, get.member_phone, get.member_reg};
                     String Result = setTextLength(info[0],10) + setTextLength(info[1],10) + setTextLength(info[2],10) + setTextLength(info[3],10);
                     arrayData.add(Result);
                     arrayIndex.add(key);

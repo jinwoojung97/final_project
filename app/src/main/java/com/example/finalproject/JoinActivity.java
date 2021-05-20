@@ -116,18 +116,6 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         boolean IsExist = arrayIndex.contains(member_id);
         return IsExist;
     }
-    private boolean IsExistPW() {
-        boolean IsExistPW = arrayIndex.contains(null);
-        return IsExistPW;
-    }
-    private boolean IsExistPHONE() {
-        boolean IsExistPHONE = arrayIndex.contains(null);
-        return IsExistPHONE;
-    }
-    private boolean IsExistREG() {
-        boolean IsExistREG = arrayIndex.contains(null);
-        return IsExistREG;
-    }
 
 
 
@@ -204,20 +192,9 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
 
                     startActivity(intent);
+                }else{
+                    Toast.makeText(JoinActivity.this, "아이디가 중복 되었습니다.", Toast.LENGTH_SHORT).show();
                 }
-                if(IsExistID()){
-                    tv_join_id_err.setText("아이디를 확인해주세요!");
-                }
-                if(IsExistPW()){
-                    tv_join_id_err.setText("비밀번호를 입력하세요!");
-                }
-                if(IsExistPHONE()){
-                    tv_join_id_err.setText("번호를 입력하세요!");
-                }
-                if(IsExistREG()){
-                    tv_join_id_err.setText("지역을 선택하세요!");
-                }
-
                 edit_join_id.requestFocus();
                 edit_join_id.setCursorVisible(true);
                 break;

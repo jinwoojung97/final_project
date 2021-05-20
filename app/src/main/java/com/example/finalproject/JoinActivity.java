@@ -181,7 +181,8 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 if(!IsExistID()){
                     postFirebaseDatabase(true);
                     getFirebaseDatabase();
-                    setInsertMode();
+                    /*텍스트 초기화
+                    setInsertMode();*/
                     // join버튼 클릭 시 회원가입 성공/실패 팝업창 띄우기
                     Toast.makeText(JoinActivity.this, "회원가입이 완료 되었습니다!!", Toast.LENGTH_SHORT).show();
 

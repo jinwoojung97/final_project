@@ -13,6 +13,10 @@ public class MembersVO {
     public String member_phone;
     public String member_reg;
 
+    public MembersVO() {
+
+    }
+
     public MembersVO(String member_id, String member_pw, String member_tel, String member_reg) {
         this.member_id = member_id;
         this.member_pw = member_pw;

@@ -142,8 +142,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                     String key = postSnapshot.getKey();
                     MembersVO get = postSnapshot.getValue(MembersVO.class);
                     String[] info = {get.member_id, get.member_pw, get.member_phone};
-                    String Result = setTextLength(info[0], 10) + setTextLength(info[1], 10) +
-                            setTextLength(info[2], 10) +setTextLength(info[3], 10);
+                    String Result = setTextLength(info[0], 10) + setTextLength(info[1], 10) + setTextLength(info[2], 10) +setTextLength(info[3], 10);
                     arrayData.add(Result);
                     arrayIndex.add(key);
                     Log.d("getFirebaseDatabase", "key" + key);

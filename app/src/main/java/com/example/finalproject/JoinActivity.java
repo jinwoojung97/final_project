@@ -1,9 +1,11 @@
 package com.example.finalproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,10 +13,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JoinActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private DatabaseReference reference;
+
+    static ArrayList<String> arrayIndex = new ArrayList<String>();
+    static ArrayList<String> arrayData = new ArrayList<String>();
+
+    String member_id, member_pw, member_phone, member_reg;
+    String sort = "MEMBER_ID";
 
     EditText edit_join_id, edit_join_pw, edit_join_phone;  //입력메시지
     TextView tv_region, tv_join_id_err, tv_join_pw_err, tv_join_phone_err, tv_join_region_err; //에러메시지
@@ -71,26 +91,130 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        getFirebaseDatabase();
+
         /* 1. 입력받은 ID/PW/PHONE/REGION DB에 저장
-        *  2. 중복된 ID 체크
-        *  3. 입력 시 에러메시지 출력
-        * */
+         *  2. 중복된 ID 체크
+         *  3. 입력 시 에러메시지 출력
+         * */
 
-        // join버튼 클릭 시 회원가입 성공/실패 팝업창 띄우기
-        btn_join_join.setOnClickListener(new View.OnClickListener() {
+
+    }
+
+    private boolean IsExistID() {
+        boolean IsExist = arrayIndex.contains(member_id);
+        return IsExist;
+    }
+
+    // 회원가입 성공시 초기화
+    private void setInsertMode() {
+        edit_join_id.setText("");
+        edit_join_pw.setText("");
+        edit_join_phone.setText("");
+        spinner_join_region.setSelection(0);
+    }
+
+    public void postFirebaseDatabase(boolean add){
+        reference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String,Object> postValues = null;
+
+        if (add){
+            MembersVO post = new MembersVO(member_id, member_pw, member_phone, member_reg);
+            postValues = post.toMap();
+        }
+        childUpdates.put("/MembersVO/" + member_id, postValues);
+        reference.updateChildren(childUpdates);
+    }
+
+    private void getFirebaseDatabase() {
+        ValueEventListener postListener = new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.e("getFirebaseDatabase", "key" + snapshot.getChildrenCount());
+                arrayData.clear();
+                arrayIndex.clear();
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                    String key = postSnapshot.getKey();
+                    MembersVO get = postSnapshot.getValue(MembersVO.class);
+                    String[] info = {get.member_id, get.member_pw, get.member_phone};
+                    String Result = setTextLength(info[0], 10) + setTextLength(info[1], 10) +
+                            setTextLength(info[2], 10) +setTextLength(info[3], 10);
+                    arrayData.add(Result);
+                    arrayIndex.add(key);
+                    Log.d("getFirebaseDatabase", "key" + key);
+                    Log.d("getFirebaseDatabase", "info" + info[0] + info[1] + info[2] + info[3]);
+                }
             }
-        });
 
-
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("getFirebaseDatabase", "loadPost:onCancelled", error.toException());
+            }
+        };
+        Query sortbyAge = FirebaseDatabase.getInstance().getReference().child("MembersVO").orderByChild(sort);
+        sortbyAge.addListenerForSingleValueEvent(postListener);
+    }
+    public  String setTextLength(String text, int length){
+        if (text.length()<length){
+            int gap = length - text.length();
+            for (int i=0; i<gap; i++){
+                text = text + " ";
+            }
+        }
+        return text;
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_join_join:
+                member_id = edit_join_id.getText().toString();
+                member_pw = edit_join_pw.getText().toString();
+                member_phone = edit_join_phone.getText().toString();
+                member_reg = spinner_join_region.getSelectedItem().toString();
+
+                // 아이디 존재 여부
+                if(!IsExistID()){
+                    postFirebaseDatabase(true);
+                    getFirebaseDatabase();
+                    setInsertMode();
+                    // join버튼 클릭 시 회원가입 성공/실패 팝업창 띄우기
+                    Toast.makeText(JoinActivity.this, "회원가입이 완료 되었습니다!!", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(JoinActivity.this, "가입창을 다시 확인 하십시오.", Toast.LENGTH_SHORT).show();
+                }
+                edit_join_id.requestFocus();
+                edit_join_id.setCursorVisible(true);
+                break;
+
+            /* 업데이트 버튼 ----------------------------------------------------------
+            case R.id.btn_update:
+                member_id = edit_join_id.getText().toString();
+                member_pw = edit_join_pw.getText().toString();
+                member_phone = edit_join_phone.getText().toString();
+                member_reg = spinner_join_region.getSelectedItem().toString();
+
+                postFirebaseDatabase(true);
+                getFirebaseDatabase();
+                setInsertMode();
+                Toast.makeText(MainActivity.this, "정보가 수정되었습니다.", Toast.LENGTH_LONG).show();
+
+                edit_join_id.setEnabled(true);
+                edit_join_id.requestFocus();
+                edit_join_id.setCursorVisible(true);
+                break;*/
+
+        }
 
     }
+
+
+
+
 }

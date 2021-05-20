@@ -1,8 +1,10 @@
 package com.example.finalproject;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.HashMap;
 import java.util.Map;
-import com.google.firebase.d
 
 @IgnoreExtraProperties
 public class MembersVO {
@@ -18,6 +20,7 @@ public class MembersVO {
         this.member_reg = member_reg;
     }
 
+@Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("member_id", member_id);

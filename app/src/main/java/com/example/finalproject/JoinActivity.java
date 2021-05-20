@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class JoinActivity extends AppCompatActivity {
+public class JoinActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText edit_join_id, edit_join_pw, edit_join_phone;  //입력메시지
     TextView tv_region, tv_join_id_err, tv_join_pw_err, tv_join_phone_err, tv_join_region_err; //에러메시지
@@ -32,12 +32,16 @@ public class JoinActivity extends AppCompatActivity {
         edit_join_id = findViewById(R.id.edit_join_id);
         edit_join_pw = findViewById(R.id.edit_join_pw);
         edit_join_phone=findViewById(R.id.edit_join_phone);
+
         tv_join_id_err = findViewById(R.id.tv_join_id_err);
         tv_join_pw_err=findViewById(R.id.tv_join_pw_err);
         tv_join_phone_err=findViewById(R.id.tv_join_phone_err);
         tv_join_region_err=findViewById(R.id.tv_join_region_err);
+
         btn_join_join=findViewById(R.id.btn_join_join);
+
         tv_region=findViewById(R.id.tv_region);
+
         spinner_join_region=findViewById(R.id.spinner_join_region);
 
         regions = new ArrayList<>();
@@ -82,6 +86,11 @@ public class JoinActivity extends AppCompatActivity {
         });
 
 
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }

@@ -104,11 +104,6 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private boolean IsExistID() {
-        boolean IsExist = arrayIndex.contains(member_id);
-        return IsExist;
-    }
-
     // 회원가입 성공시 초기화
     private void setInsertMode() {
         edit_join_id.setText("");
@@ -116,6 +111,13 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         edit_join_phone.setText("");
         spinner_join_region.setSelection(0);
     }
+
+    private boolean IsExistID() {
+        boolean IsExist = arrayIndex.contains(member_id);
+        return IsExist;
+    }
+
+
 
     public void postFirebaseDatabase(boolean add){
         reference = FirebaseDatabase.getInstance().getReference();
@@ -133,16 +135,16 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     private void getFirebaseDatabase() {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.e("getFirebaseDatabase", "key" + snapshot.getChildrenCount());
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e("getFirebaseDatabase", "key" + dataSnapshot.getChildrenCount());
                 arrayData.clear();
                 arrayIndex.clear();
 
-                for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     String key = postSnapshot.getKey();
                     MembersVO get = postSnapshot.getValue(MembersVO.class);
                     String[] info = {get.member_id, get.member_pw, get.member_phone};
-                    String Result = setTextLength(info[0], 10) + setTextLength(info[1], 10) + setTextLength(info[2], 10) +setTextLength(info[3], 10);
+                    String Result = setTextLength(info[0],10) + setTextLength(info[1],10) + setTextLength(info[2],10) + setTextLength(info[3],10);
                     arrayData.add(Result);
                     arrayIndex.add(key);
                     Log.d("getFirebaseDatabase", "key" + key);
@@ -151,12 +153,13 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("getFirebaseDatabase", "loadPost:onCancelled", error.toException());
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("getFirebaseDatabase", "loadPost:onCancelled", databaseError.toException());
             }
         };
-        Query sortbyAge = FirebaseDatabase.getInstance().getReference().child("MembersVO").orderByChild(sort);
-        sortbyAge.addListenerForSingleValueEvent(postListener);
+        // ID의 따라 정렬
+        Query sortbyID = FirebaseDatabase.getInstance().getReference().child("MembersVO").orderByChild(sort);
+        sortbyID.addListenerForSingleValueEvent(postListener);
     }
     public  String setTextLength(String text, int length){
         if (text.length()<length){
@@ -214,10 +217,5 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 break;*/
 
         }
-
     }
-
-
-
-
 }

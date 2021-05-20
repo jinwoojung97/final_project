@@ -59,7 +59,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         tv_join_region_err=findViewById(R.id.tv_join_region_err);
 
         btn_join_join=findViewById(R.id.btn_join_join);
-        btn_join_join.setOnClickListener(this);
+
 
         tv_region=findViewById(R.id.tv_region);
 
@@ -98,7 +98,8 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
          *  2. 중복된 ID 체크
          *  3. 입력 시 에러메시지 출력
          * */
-        btn_join_join.setEnabled(true);
+        btn_join_join.setOnClickListener(this);
+
 
 
     }

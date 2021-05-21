@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity{
         btn_login_login = findViewById(R.id.btn_login_login);
         btn_lgoin_join = findViewById(R.id.btn_login_join);
 
+        // 배열에 파이어베이스에 등록된 정보들을 넣어줌
         databaseReference.child("MembersVO").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -88,6 +89,7 @@ public class LoginActivity extends AppCompatActivity{
                 member_id = edit_login_id.getText().toString();
                 member_pw = edit_login_pw.getText().toString();
 
+                // 반복문을 불러 현재 쓰여진 정보와 맞는지 비교
                 for (int i=0; i<arrayListID.size(); i++){
                     if (arrayListID.get(i).contains(member_id) && arrayListPW.get(i).contains(member_pw)){
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);

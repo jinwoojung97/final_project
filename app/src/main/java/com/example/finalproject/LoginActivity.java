@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_lgoin_join = findViewById(R.id.btn_login_join);
 
 
-        // 로그인 버튼 클릭 시 로그인 실패/성공 팝업창 띄우기
+        // 로그인 버튼 클릭 시 로그인 실패/성공 토스트 메시지 창 띄우기
         btn_login_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

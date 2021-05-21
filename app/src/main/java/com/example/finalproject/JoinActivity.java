@@ -104,7 +104,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    // edit 텍스트 초기화
+//     edit 텍스트 초기화
 //    private void setInsertMode() {
 //        edit_join_id.setText("");
 //        edit_join_pw.setText("");

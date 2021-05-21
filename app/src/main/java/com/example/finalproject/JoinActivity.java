@@ -104,13 +104,13 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    // 회원가입 성공시 초기화
-    private void setInsertMode() {
-        edit_join_id.setText("");
-        edit_join_pw.setText("");
-        edit_join_phone.setText("");
-        spinner_join_region.setSelection(0);
-    }
+    // edit 텍스트 초기화
+//    private void setInsertMode() {
+//        edit_join_id.setText("");
+//        edit_join_pw.setText("");
+//        edit_join_phone.setText("");
+//        spinner_join_region.setSelection(0);
+//    }
 
     private boolean IsExistID() {
         boolean IsExist = arrayIndex.contains(member_id);
@@ -193,10 +193,9 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
 
                     startActivity(intent);
                 }else{
-                    Toast.makeText(JoinActivity.this, "가입창을 다시 확인 하십시오.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JoinActivity.this, "아이디가 중복 되었습니다.", Toast.LENGTH_SHORT).show();
                 }
-                edit_join_id.requestFocus();
-                edit_join_id.setCursorVisible(true);
+
                 break;
 
             /* 업데이트 버튼 ----------------------------------------------------------
@@ -211,9 +210,6 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 setInsertMode();
                 Toast.makeText(MainActivity.this, "정보가 수정되었습니다.", Toast.LENGTH_LONG).show();
 
-                edit_join_id.setEnabled(true);
-                edit_join_id.requestFocus();
-                edit_join_id.setCursorVisible(true);
                 break;*/
 
         }

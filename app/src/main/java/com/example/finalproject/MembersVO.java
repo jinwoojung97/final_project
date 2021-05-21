@@ -34,4 +34,36 @@ public class MembersVO {
 
         return result;
     }
+
+    public String getMember_id() {
+        return member_id;
+    }
+
+    public String getMember_pw() {
+        return member_pw;
+    }
+
+    public String getMember_phone() {
+        return member_phone;
+    }
+
+    public String getMember_reg() {
+        return member_reg;
+    }
+
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
+    }
+
+    public void setMember_pw(String member_pw) {
+        this.member_pw = member_pw;
+    }
+
+    public void setMember_phone(String member_phone) {
+        this.member_phone = member_phone;
+    }
+
+    public void setMember_reg(String member_reg) {
+        this.member_reg = member_reg;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,6 +16,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,22 +34,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JoinActivity extends AppCompatActivity implements View.OnClickListener{
+public class JoinActivity extends AppCompatActivity {
 
-    private DatabaseReference reference;
-
-    static ArrayList<String> arrayIndex = new ArrayList<String>();
-    static ArrayList<String> arrayData = new ArrayList<String>();
-
-    String member_id, member_pw, member_phone, member_reg;
-    String sort = "MEMBER_ID";
-
-    EditText edit_join_id, edit_join_pw, edit_join_phone;  //입력메시지
-    TextView tv_region, tv_join_id_err, tv_join_pw_err, tv_join_phone_err, tv_join_region_err; //에러메시지
-    Spinner spinner_join_region; //지역 선택 스피너
+    EditText edit_join_id, edit_join_pw, edit_join_phone;
+    TextView tv_region;
+    Spinner spinner_join_region;
     ArrayList<String> regions;
     Button btn_join_join;
-
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,19 +52,14 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         edit_join_id = findViewById(R.id.edit_join_id);
         edit_join_pw = findViewById(R.id.edit_join_pw);
         edit_join_phone=findViewById(R.id.edit_join_phone);
-
-        tv_join_id_err = findViewById(R.id.tv_join_id_err);
-        tv_join_pw_err=findViewById(R.id.tv_join_pw_err);
-        tv_join_phone_err=findViewById(R.id.tv_join_phone_err);
-        tv_join_region_err=findViewById(R.id.tv_join_region_err);
-
         btn_join_join=findViewById(R.id.btn_join_join);
-
-
         tv_region=findViewById(R.id.tv_region);
-
         spinner_join_region=findViewById(R.id.spinner_join_region);
 
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.start();
+
+        //지역 선택 스피너
         regions = new ArrayList<>();
         regions.add("지역을 선택하세요");
         regions.add("광산구");
@@ -83,7 +78,6 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 }else{
                     tv_region.setText("지역 : "+parent.getItemAtPosition(i));
                 }
-
             }
 
             @Override
@@ -92,126 +86,66 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        getFirebaseDatabase();
-
-        /* 1. 입력받은 ID/PW/PHONE/REGION DB에 저장
-         *  2. 중복된 ID 체크
-         *  3. 입력 시 에러메시지 출력
-         * */
-        btn_join_join.setOnClickListener(this);
-
-
-
-    }
-
-    // edit 텍스트 초기화
-//    private void setInsertMode() {
-//        edit_join_id.setText("");
-//        edit_join_pw.setText("");
-//        edit_join_phone.setText("");
-//        spinner_join_region.setSelection(0);
-//    }
-
-    private boolean IsExistID() {
-        boolean IsExist = arrayIndex.contains(member_id);
-        return IsExist;
-    }
-
-
-
-    public void postFirebaseDatabase(boolean add){
-        reference = FirebaseDatabase.getInstance().getReference();
-        Map<String, Object> childUpdates = new HashMap<>();
-        Map<String,Object> postValues = null;
-
-        if (add){
-            MembersVO post = new MembersVO(member_id, member_pw, member_phone, member_reg);
-            postValues = post.toMap();
-        }
-        childUpdates.put("/MembersVO/" + member_id, postValues);
-        reference.updateChildren(childUpdates);
-    }
-
-    private void getFirebaseDatabase() {
-        ValueEventListener postListener = new ValueEventListener() {
+//         회원가입 버튼 클릭 시 서버로 데이터 전송
+        btn_join_join.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.e("getFirebaseDatabase", "key" + dataSnapshot.getChildrenCount());
-                arrayData.clear();
-                arrayIndex.clear();
+            public void onClick(View v) {
 
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    String key = postSnapshot.getKey();
-                    MembersVO get = postSnapshot.getValue(MembersVO.class);
-                    String[] info = {get.member_id, get.member_pw, get.member_phone, get.member_reg};
-                    String Result = setTextLength(info[0],10) + setTextLength(info[1],10) + setTextLength(info[2],10) + setTextLength(info[3],10);
-                    arrayData.add(Result);
-                    arrayIndex.add(key);
-                    Log.d("getFirebaseDatabase", "key" + key);
-                    Log.d("getFirebaseDatabase", "info" + info[0] + info[1] + info[2] + info[3]);
-                }
-            }
+                //키값설정
+                String join_id = edit_join_id.getText().toString();
+                String join_pw = edit_join_pw.getText().toString();
+                String join_phone = edit_join_phone.getText().toString();
+                String join_region = tv_region.getText().toString();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("getFirebaseDatabase", "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        // ID의 따라 정렬
-        Query sortbyID = FirebaseDatabase.getInstance().getReference().child("MembersVO").orderByChild(sort);
-        sortbyID.addListenerForSingleValueEvent(postListener);
-    }
-    public  String setTextLength(String text, int length){
-        if (text.length()<length){
-            int gap = length - text.length();
-            for (int i=0; i<gap; i++){
-                text = text + " ";
-            }
-        }
-        return text;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_join_join:
-                member_id = edit_join_id.getText().toString();
-                member_pw = edit_join_pw.getText().toString();
-                member_phone = edit_join_phone.getText().toString();
-                member_reg = spinner_join_region.getSelectedItem().toString();
-
-                // 아이디 존재 여부
-                if(!IsExistID()){
-                    postFirebaseDatabase(true);
-                    getFirebaseDatabase();
-                    /*텍스트 초기화
-                    setInsertMode();*/
-                    // join버튼 클릭 시 회원가입 성공/실패 팝업창 띄우기
-                    Toast.makeText(JoinActivity.this, "회원가입이 완료 되었습니다!!", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(JoinActivity.this, "아이디가 중복 되었습니다.", Toast.LENGTH_SHORT).show();
+                if (join_id.length() == 0 || join_pw.length() == 0 || join_phone.length() == 0 || join_region.length() == 0) {
+                    Toast.makeText(JoinActivity.this, "필수 입력값을 작성해주세요!", Toast.LENGTH_SHORT).show();
                 }
 
-                break;
+                //서버주소
+                String server_url ="http://222.102.43.79:8088/AndroidServer/JoinController";
 
-            /* 업데이트 버튼 ----------------------------------------------------------
-            case R.id.btn_update:
-                member_id = edit_join_id.getText().toString();
-                member_pw = edit_join_pw.getText().toString();
-                member_phone = edit_join_phone.getText().toString();
-                member_reg = spinner_join_region.getSelectedItem().toString();
+                StringRequest request = new StringRequest(
+                        Request.Method.POST,
+                        server_url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // 가입 성공 시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
+                                if(response.equals("1")){
+                                    Toast.makeText(JoinActivity.this, "가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                    Intent login_intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                    startActivity(login_intent);
+                                    finish();
+                                }else if(response.equals("0")){
+                                    Toast.makeText(JoinActivity.this,"이미 존재하는 아이디 입니다.",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.v("hhd",error.getMessage());
+                            }
+                        }
+                ){
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
 
-                postFirebaseDatabase(true);
-                getFirebaseDatabase();
-                setInsertMode();
-                Toast.makeText(MainActivity.this, "정보가 수정되었습니다.", Toast.LENGTH_LONG).show();
+                        //키값 전송
+                        params.put("join_id",join_id);
+                        params.put("join_pw",join_pw);
+                        params.put("join_phone",join_phone);
+                        params.put("join_region",join_region);
 
-                break;*/
+                        return params;
+                    }
+                };
+                requestQueue.add(request);
 
-        }
+                Log.v("hhd","Join Click");
+            }
+        });
+
+
     }
 }

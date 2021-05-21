@@ -23,7 +23,7 @@
         android:id="@+id/imageView3"
         android:layout_width="300dp"
         android:layout_height="150dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
         android:id="@+id/edit_join_id"
         android:layout_width="289dp"
         android:layout_height="39dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="아이디를 입력해주세요"
         android:inputType="textPersonName"
@@ -57,56 +57,16 @@
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-    <TextView
-        android:id="@+id/tv_join_id_err"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="#FF0000"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/edit_join_id"
-        app:layout_constraintTop_toBottomOf="@+id/edit_join_id" />
-
-    <TextView
-        android:id="@+id/tv_join_pw_err"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="#FF0000"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/edit_join_pw"
-        app:layout_constraintTop_toBottomOf="@+id/edit_join_pw" />
-
-    <TextView
-        android:id="@+id/tv_join_phone_err"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="#FF0000"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/edit_join_phone"
-        app:layout_constraintTop_toBottomOf="@+id/edit_join_phone" />
-
-    <TextView
-        android:id="@+id/tv_join_region_err"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="#FF0000"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/spinner_join_region"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_join_region" />
-
     <Button
         android:id="@+id/btn_join_join"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:text="회원가입"
         android:textStyle="bold"
         app:backgroundTint="#2ECC71"
         app:layout_constraintEnd_toEndOf="@+id/spinner_join_region"
-        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.467"
         app:layout_constraintStart_toStartOf="@+id/spinner_join_region"
         app:layout_constraintTop_toBottomOf="@+id/spinner_join_region" />
 

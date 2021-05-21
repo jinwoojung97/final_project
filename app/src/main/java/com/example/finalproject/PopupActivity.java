@@ -11,6 +11,7 @@ public class PopupActivity extends Activity {
 
     TextView txtText;
     String result;
+    String[] question_c_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class PopupActivity extends Activity {
         //데이터 가져오기
         Intent intent = getIntent();
         String data = intent.getStringExtra("data"); //팝업창에 띄울 메신저
+        String rdata = intent.getStringExtra("r.data");
         result = intent.getStringExtra("result"); //정답체크
 
         txtText.setText(data);
@@ -39,6 +41,9 @@ public class PopupActivity extends Activity {
         }else if("2".equals(result)){
             setResult(RESULT_CANCELED, intent);
             intent.putExtra("result", "실패 포인트 적금 실패");
+        }else if("3".equals(result)){
+            setResult(RESULT_CANCELED, intent);
+            intent.putExtra("result", "이미 적립되었습니다");
         }
         //액티비티(팝업) 닫기
         finish();

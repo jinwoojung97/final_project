@@ -94,6 +94,8 @@ public class LoginActivity extends AppCompatActivity{
                     if (arrayListID.get(i).contains(member_id) && arrayListPW.get(i).contains(member_pw)){
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
+                    } else{
+                        Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
 

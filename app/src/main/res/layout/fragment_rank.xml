@@ -51,8 +51,8 @@
 
             <ImageView
                 android:id="@+id/imageView10"
-                android:layout_width="367dp"
-                android:layout_height="607dp"
+                android:layout_width="365dp"
+                android:layout_height="590dp"
                 android:src="@drawable/rankview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

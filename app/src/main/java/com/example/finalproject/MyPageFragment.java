@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -30,16 +31,17 @@ public class MyPageFragment extends Fragment {
         edit_mypage_phone = fragment.findViewById(R.id.edit_mypage_phone);
         edit_mypage_region = fragment.findViewById(R.id.edit_mypage_region);
         btn_mypage_point = fragment.findViewById(R.id.btn_mypage_point);
+        btn_mypage_update = fragment.findViewById(R.id.btn_mypage_update);
 
         // 회원테이블에서 아이디  가져오기
-
         // 포인트테이블에서 가져오기
 
         // 포인트 조회버튼 클릭 시 포인트 조회페이지로 넘어감
         btn_mypage_point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), PointFragment.class);
+                startActivity(intent);
             }
         });
 
@@ -47,9 +49,7 @@ public class MyPageFragment extends Fragment {
         btn_mypage_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                member_pw = edit_mypage_pw.getText().toString();
-                member_phone = edit_mypage_phone.getText().toString();
-                member_reg = edit_mypage_region.getText().toString();
+
             }
         });
         

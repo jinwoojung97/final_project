@@ -7,21 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-
 public class MyPageFragment extends Fragment {
+    String member_id, member_pw, member_phone, member_reg;
 
     TextView tv_mypage_id, tv_mypage_point;
     EditText edit_mypage_pw, edit_mypage_phone, edit_mypage_region;
-    Button btn_mypage_point;
+    Button btn_mypage_point, btn_mypage_update;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +44,15 @@ public class MyPageFragment extends Fragment {
         });
 
         // 회원테이블에서 비밀번호, 핸드폰번호, 지역 가져오기
-
+        btn_mypage_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                member_pw = edit_mypage_pw.getText().toString();
+                member_phone = edit_mypage_phone.getText().toString();
+                member_reg = edit_mypage_region.getText().toString();
+            }
+        });
+        
         return fragment;
     }
 }

@@ -101,7 +101,6 @@ public class RankFragment extends Fragment {
                        } catch (JSONException e) {
                            e.printStackTrace();
                        }
-
                    }
                },
                new Response.ErrorListener() {

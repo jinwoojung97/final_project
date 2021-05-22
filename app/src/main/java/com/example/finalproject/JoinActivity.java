@@ -16,13 +16,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +43,8 @@ public class JoinActivity extends AppCompatActivity {
     Button btn_join_join;
     RequestQueue requestQueue;
 
+    String region = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +58,8 @@ public class JoinActivity extends AppCompatActivity {
         tv_region=findViewById(R.id.tv_region);
         spinner_join_region=findViewById(R.id.spinner_join_region);
 
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.start();
+        // requestQueue = Volley.newRequestQueue(getApplicationContext());
+        // requestQueue.start();
 
         //지역 선택 스피너
         regions = new ArrayList<>();
@@ -77,7 +79,9 @@ public class JoinActivity extends AppCompatActivity {
                     tv_region.setText("지역");
                 }else{
                     tv_region.setText("지역 : "+parent.getItemAtPosition(i));
+                    region = parent.getItemAtPosition(i).toString();
                 }
+
             }
 
             @Override
@@ -135,7 +139,7 @@ public class JoinActivity extends AppCompatActivity {
                         params.put("join_id",join_id);
                         params.put("join_pw",join_pw);
                         params.put("join_phone",join_phone);
-                        params.put("join_region",join_region);
+                        params.put("join_region",region);
 
                         return params;
                     }

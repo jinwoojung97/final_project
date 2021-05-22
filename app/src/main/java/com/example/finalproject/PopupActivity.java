@@ -37,7 +37,7 @@ public class PopupActivity extends Activity {
         Intent intent = new Intent();
         if("1".equals(result)){
             setResult(RESULT_OK, intent);
-            intent.putExtra("result", "성공 포인트 적금");
+            intent.putExtra("result", "성공 100포인트 적금");
         }else if("2".equals(result)){
             setResult(RESULT_CANCELED, intent);
             intent.putExtra("result", "실패 포인트 적금 실패");

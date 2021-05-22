@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment {
 
 
     // 퀴즈 문제
-    int[] question_list = {R.drawable.quiz1, R.drawable.quiz2, R.drawable.quiz3, R.drawable.quiz4};
+    int[] question_list = {R.drawable.quiz1, R.drawable.quiz2, R.drawable.quiz3, R.drawable.quiz4,R.drawable.quiz5,R.drawable.quiz6,R.drawable.quizend};
     int img = 0;
 
     @Override
@@ -61,19 +61,24 @@ public class HomeFragment extends Fragment {
         String[] question_c_list = {"입구가 조금이라도 깨지면 재사용이 \n " +
                 "불가능하기 때문에 \n" +
                 "입구 보호를 위해 뚜껑을 \n" +
-                "끼운 채로 배출하면 좋다", //1번quiz
+                "끼운 채로 배출하면 좋다", //1번end
                 "HDPE,LDPE,PP,PVC는 재활용이 가능\n" +
-                        "OTHER 표시가 있는 플라스틱 포장재는 복합 재질이므로 일반쓰레기!!", // 2번quiz
+                        "OTHER 표시가 있는 플라스틱 포장재는 복합 재질이므로 일반쓰레기!!", // 2번end
                 "-철사에 플라스틱을 감싸서 만든\n 철제 옷걸이(세탁소 옷걸이)는 \n" +
                         "그대로 고철(캔류-철)옷걸이\n 분리 수거로 분리 배출해요.-\n" +
                         "\n" +
                         "-고리 부분을 포함해서 \n모두 플라스틱으로만 제작된 옷걸이는 \n" +
                         "플라스틱 분리 수거로 분리 배출해요.-\n" +
                         "\n" +
-                        "-분리가 안되는 경우 모두 일반쓰레기\n(정량제봉투)로 버려주세요-", //3번 quiz
+                        "-분리가 안되는 경우 모두 일반쓰레기\n(정량제봉투)로 버려주세요-", //3번 end
                 "유리병은 색깔별로 분리배출을 해야하고 \n" +
                         "도자기 세라믹 종류는 유리병과 분리해서 폐기물 봉투에 배출해야한다\n" +
-                        "유리병은 색깔별로 분리배출해줘야\n 올바른 재활용이 가능합니다",
+                        "유리병은 색깔별로 분리배출해줘야\n 올바른 재활용이 가능합니다", //4번 end
+                "비닐을 폐쇠하는 과정에서 기계에 고무가 끼어서 고장을 유발할 수 있기때문에 \n" +
+                        "종량제 봉투에 담아 버려줘야합니다", //5번 end
+                "아이스팩 안에 들어가 있는 젤같은 경우는 본질이 플라스틱이기 때문에\n" +
+                        "싱크대나 변기에 버리면 안되고 안에 들어가 있는 젤은 '종량제 봉투'에 깨끗하게 다 버리고\n" +
+                        "남은 봉투만 비닐로 버려야해요!\n그게 귀찮다면 통째로 종량제 봉투에\n버려야합니다"
         };
 
 
@@ -105,7 +110,7 @@ public class HomeFragment extends Fragment {
                     startActivityForResult(intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 3) {
+                    if (img == 6) {
                         img = 0;
                     } else {
                         img++;
@@ -117,7 +122,7 @@ public class HomeFragment extends Fragment {
                     startActivityForResult(intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 3) {
+                    if (img == 6) {
                         img = 0;
                     } else {
                         img++;
@@ -129,7 +134,7 @@ public class HomeFragment extends Fragment {
                     startActivityForResult(intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 3) {
+                    if (img == 6) {
                         img = 0;
                     } else {
                         img++;
@@ -141,14 +146,44 @@ public class HomeFragment extends Fragment {
                     startActivityForResult(intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 3) {
+                    if (img == 6) {
                         img = 0;
                     } else {
                         img++;
                     }
                     mainimg.setImageResource(question_list[img]);
-                } else {
-                    Toast.makeText(getContext(), "오늘의 알쓸쓰잡 끝!", Toast.LENGTH_LONG).show();
+                }else if (question_count == 4) {
+                    intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    intent.putExtra("result", "2");
+                    startActivityForResult(intent, POINTDATA);
+                    Log.v("test", question_count + "");
+
+                    if (img == 6) {
+                        img = 0;
+                    } else {
+                        img++;
+                    }
+                    mainimg.setImageResource(question_list[img]);
+                }else if (question_count == 5) {
+                    intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    intent.putExtra("result", "3");
+                    startActivityForResult(intent, POINTDATA);
+                    Log.v("test", question_count + "");
+
+                    if (img == 6) {
+                        img = 0;
+                    } else {
+                        img++;
+                    }
+                    mainimg.setImageResource(question_list[img]);
+                }else if(question_count == 6){
+                    if (img == 6) {
+                        img = 0;
+                    } else {
+                        img++;
+                    }
+                    mainimg.setImageResource(question_list[img]);
+
                 }
             }
         });
@@ -162,7 +197,7 @@ public class HomeFragment extends Fragment {
                     intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
                     intent.putExtra("result", "2");
                     startActivityForResult(intent, POINTDATA);
-                    if (img == 3) {
+                    if (img == 6) {
                         img = 0;
                     } else {
                         img++;
@@ -173,7 +208,7 @@ public class HomeFragment extends Fragment {
                     intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
                     intent.putExtra("result", "2");
                     startActivityForResult(intent, POINTDATA);
-                    if (img == 3) {
+                    if (img == 6) {
                         img = 0;
                     } else {
                         img++;
@@ -184,7 +219,7 @@ public class HomeFragment extends Fragment {
                     intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
                     intent.putExtra("result", "3");
                     startActivityForResult(intent, POINTDATA);
-                    if (img == 3) {
+                    if (img == 6) {
                         img = 0;
                     } else {
                         img++;
@@ -195,12 +230,44 @@ public class HomeFragment extends Fragment {
                     intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
                     intent.putExtra("result", "3");
                     startActivityForResult(intent, POINTDATA);
-                    if (img == 3) {
+                    if (img == 6) {
                         img = 0;
                     } else {
                         img++;
                     }
                     mainimg.setImageResource(question_list[img]);
+                }else if (question_count == 4) {
+                    intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    intent.putExtra("result", "2");
+                    startActivityForResult(intent, POINTDATA);
+                    Log.v("test", question_count + "");
+
+                    if (img == 6) {
+                        img = 0;
+                    } else {
+                        img++;
+                    }
+                    mainimg.setImageResource(question_list[img]);
+                }else if (question_count == 5) {
+                    intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    intent.putExtra("result", "3");
+                    startActivityForResult(intent, POINTDATA);
+                    Log.v("test", question_count + "");
+
+                    if (img == 6) {
+                        img = 0;
+                    } else {
+                        img++;
+                    }
+                    mainimg.setImageResource(question_list[img]);
+                }else if(question_count == 6){
+                    if (img == 6) {
+                        img = 0;
+                    } else {
+                        img++;
+                    }
+                    mainimg.setImageResource(question_list[img]);
+
                 }
 
 

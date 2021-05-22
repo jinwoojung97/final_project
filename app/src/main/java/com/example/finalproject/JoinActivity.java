@@ -23,6 +23,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,8 +59,8 @@ public class JoinActivity extends AppCompatActivity {
         tv_region=findViewById(R.id.tv_region);
         spinner_join_region=findViewById(R.id.spinner_join_region);
 
-        // requestQueue = Volley.newRequestQueue(getApplicationContext());
-        // requestQueue.start();
+         requestQueue = Volley.newRequestQueue(getApplicationContext());
+         requestQueue.start();
 
         //지역 선택 스피너
         regions = new ArrayList<>();

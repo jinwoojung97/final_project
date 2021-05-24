@@ -46,6 +46,11 @@ public class LoginActivity extends AppCompatActivity{
         btn_login_login = findViewById(R.id.btn_login_login);
         btn_login_join = findViewById(R.id.btn_login_join);
 
+
+
+
+
+
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         // 회원가입 버튼 클릭 시 회원가입 페이지로 변환
@@ -85,9 +90,11 @@ public class LoginActivity extends AppCompatActivity{
                                     Toast.makeText(LoginActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();
                                 } else{
                                     Log.d("로그인여부",response);
-                                    Toast.makeText(LoginActivity.this,"로그인성공",Toast.LENGTH_SHORT).show();
+
                                     Intent login_intent = new Intent(getApplicationContext(), MainActivity.class);
                                     String login_info =response;
+                                    Toast.makeText(LoginActivity.this,login_info,Toast.LENGTH_SHORT).show();
+
                                     login_intent.putExtra("login",login_info);
                                     startActivity(login_intent);
                                     finish();

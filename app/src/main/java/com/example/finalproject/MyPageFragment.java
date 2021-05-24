@@ -1,6 +1,8 @@
 package com.example.finalproject;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyPageFragment extends Fragment {
     String member_id, member_pw, member_phone, member_reg;
@@ -18,12 +24,15 @@ public class MyPageFragment extends Fragment {
     TextView tv_mypage_id, tv_mypage_point;
     EditText edit_mypage_pw, edit_mypage_phone, edit_mypage_region;
     Button btn_mypage_point, btn_mypage_update;
+    Bundle extra;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragment = inflater.inflate(R.layout.fragment_my_page, container, false);
+
 
         tv_mypage_id = fragment.findViewById(R.id.tv_mypage_id);
         tv_mypage_point = fragment.findViewById(R.id.tv_mypage_point);
@@ -32,6 +41,7 @@ public class MyPageFragment extends Fragment {
         edit_mypage_region = fragment.findViewById(R.id.edit_mypage_region);
         btn_mypage_point = fragment.findViewById(R.id.btn_mypage_point);
         btn_mypage_update = fragment.findViewById(R.id.btn_mypage_update);
+
 
         // 회원테이블에서 아이디  가져오기
         // 포인트테이블에서 가져오기

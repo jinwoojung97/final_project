@@ -41,12 +41,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent(); // 넘어온 인텐트 get
+        String loginId = intent.getStringExtra("loginId");//인텐트에서 데이터꺼내오기 타입주의!!
+        String loginPoint = intent.getStringExtra("loginPoint");//인텐트에서 데이터꺼내오기 타입주의!!
+
+        Log.d("loginId",loginId);
+        Log.d("loginPoint",loginPoint);
+
+
+
+
         navi=findViewById(R.id.btm_nav);
         homeFragment = new HomeFragment();
         pointFragment = new PointFragment();
         cameraFragment = new CameraFragment();
         rankFragment = new RankFragment();
         myPageFragment = new MyPageFragment();
+
+
+        Bundle bundle = new Bundle(2);
+        bundle.putString("loginId",loginId);
+        bundle.putString("loginPoint",loginPoint);
+        pointFragment.setArguments(bundle);
 
         btn_camera = findViewById(R.id.btn_camera);
 

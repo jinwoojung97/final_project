@@ -87,8 +87,9 @@ public class LoginActivity extends AppCompatActivity{
                                     Log.d("로그인여부",response);
                                     Toast.makeText(LoginActivity.this,"로그인성공",Toast.LENGTH_SHORT).show();
                                     Intent login_intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    String login_info =response;
-                                    login_intent.putExtra("login",login_info);
+
+                                    login_intent.putExtra("loginId",loginId);
+                                    login_intent.putExtra("loginPoint",String.valueOf(loginPoint));
                                     startActivity(login_intent);
                                     finish();
                                 }

@@ -20,6 +20,10 @@ import java.util.ArrayList;
 
 public class PointFragment extends Fragment {
 
+    public static PointFragment newInstance(){
+        return new PointFragment();
+    }
+
     private ListView point_lv;
     private ArrayList<PointVO> data;
     private PointViewHoler adapter;

@@ -79,6 +79,7 @@ public class MyPageFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 PointFragment pointFragment = new PointFragment();
                 fragmentTransaction.replace(R.id.frame, pointFragment);
+
                 fragmentTransaction.commit();
             }
         });

@@ -61,7 +61,6 @@ public class PointAdapter extends BaseAdapter {
         holder.tv_point_money.setText(data.get(position).getPoint_money());
         holder.tv_point_content.setText(data.get(position).getPoint_content());
         holder.tv_point_day.setText(data.get(position).getPoint_date());
-        holder.tv_point_total.setText(data.get(position).getPoint_total());
 
         return convertView;
     }

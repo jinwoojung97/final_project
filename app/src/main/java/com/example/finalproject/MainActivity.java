@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("loginPw",loginPw);
         Log.d("loginPhone",loginPhone);
         Log.d("loginRegion",loginRegion);
+
         Log.d("loginPoint",loginPoint);
 
 

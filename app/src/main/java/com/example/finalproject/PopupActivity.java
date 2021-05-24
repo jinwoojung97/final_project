@@ -57,9 +57,9 @@ public class PopupActivity extends Activity {
         //데이터 가져오기
         popup_intent = getIntent();
         String data = popup_intent.getStringExtra("data"); //팝업창에 띄울 메신저
-        String rdata = popup_intent.getStringExtra("r.data");
         result = popup_intent.getStringExtra("result"); //정답체크
         txtText.setText(data);
+//        String rdata = popup_intent.getStringExtra("r.data");
 
         //로그인정보 가져오기
 
@@ -79,7 +79,7 @@ public class PopupActivity extends Activity {
 
             if ("1".equals(result)) {
                 setResult(RESULT_OK, popup_intent);
-                 popup_intent.putExtra("result", "성공 100포인트 적금");
+                 popup_intent.putExtra("result", "정답 100포인트 적금");
 
                 String server_url="http://222.102.43.79:8088/AndroidServer/QuizController";
 
@@ -90,7 +90,7 @@ public class PopupActivity extends Activity {
                             @Override
                             public void onResponse(String response) {
 
-                                if(response.equals("1")){
+                                if(response.equals("0")){
                                     Log.d("포인트 적립 ","실패");
                                     //Toast.makeText(PopupActivity.this,"포인트 적립 실패",Toast.LENGTH_SHORT).show();
                                 } else{

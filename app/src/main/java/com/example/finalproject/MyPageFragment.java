@@ -77,11 +77,13 @@ public class MyPageFragment extends Fragment {
 //                bundle.putString("loginId", loginId);
 //                bundle.putString("loginPoint", loginPoint);
 //
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                PointFragment pointFragment = new PointFragment();
+//                fragmentTransaction.replace(R.id.frame, pointFragment);
+//                fragmentTransaction.commit();
+               MainActivity.executeMove(R.id.item_point);
                 PointFragment pointFragment = new PointFragment();
-                fragmentTransaction.replace(R.id.frame, pointFragment);
-
-                fragmentTransaction.commit();
+                executeFragment(pointFragment);
             }
         });
 
@@ -100,6 +102,9 @@ public class MyPageFragment extends Fragment {
 
         return fragment;
 
+    }
+
+    private void executeFragment(PointFragment pointFragment) {
     }
 
 }

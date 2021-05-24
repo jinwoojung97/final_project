@@ -84,6 +84,9 @@ public class LoginActivity extends AppCompatActivity{
                             @Override
                             public void onResponse(String response) {
                                 String loginId=null;
+                                String loginPw=null;
+                                String loginPhone=null;
+                                String loginRegion=null;
                                 int loginPoint = 0;
 
                                 try {
@@ -92,6 +95,9 @@ public class LoginActivity extends AppCompatActivity{
 
                                     JSONObject loginInfo = (JSONObject)loginInfos.get(0);
                                     loginId = loginInfo.getString("member_id");
+                                    loginPw = loginInfo.getString("member_pw");
+                                    loginPhone = loginInfo.getString("member_phone");
+                                    loginRegion = loginInfo.getString("member_region");
                                     loginPoint = loginInfo.getInt("member_point");
 
 
@@ -113,6 +119,9 @@ public class LoginActivity extends AppCompatActivity{
                                     Intent login_intent = new Intent(getApplicationContext(), MainActivity.class);
 
                                     login_intent.putExtra("loginId",loginId);
+                                    login_intent.putExtra("loginPw",loginPw);
+                                    login_intent.putExtra("loginPhone",loginPhone);
+                                    login_intent.putExtra("loginRegion",loginRegion);
                                     login_intent.putExtra("loginPoint",String.valueOf(loginPoint));
                                     startActivity(login_intent);
                                     finish();

@@ -43,9 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent(); // 넘어온 인텐트 get
         String loginId = intent.getStringExtra("loginId");//인텐트에서 데이터꺼내오기 타입주의!!
+        String loginPw = intent.getStringExtra("loginPw");//인텐트에서 데이터꺼내오기 타입주의!!
+        String loginPhone = intent.getStringExtra("loginPhone");//인텐트에서 데이터꺼내오기 타입주의!!
+        String loginRegion = intent.getStringExtra("loginRegion");//인텐트에서 데이터꺼내오기 타입주의!!
         String loginPoint = intent.getStringExtra("loginPoint");//인텐트에서 데이터꺼내오기 타입주의!!
 
         Log.d("loginId",loginId);
+        Log.d("loginPw",loginPw);
+        Log.d("loginPhone",loginPhone);
+        Log.d("loginRegion",loginRegion);
         Log.d("loginPoint",loginPoint);
 
 
@@ -62,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle(2);
         bundle.putString("loginId",loginId);
         bundle.putString("loginPoint",loginPoint);
-        pointFragment.setArguments(bundle);
+        pointFragment.setArguments(bundle);                           //로그인정보보내기
 
         btn_camera = findViewById(R.id.btn_camera);
 

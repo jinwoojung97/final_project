@@ -1,12 +1,11 @@
 package com.example.finalproject;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyPageFragment extends Fragment {
-    String member_id, member_pw, member_phone, member_reg;
 
     TextView tv_mypage_id, tv_mypage_point;
     EditText edit_mypage_pw, edit_mypage_phone, edit_mypage_region;
     Button btn_mypage_point, btn_mypage_update;
-    Bundle extra;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,12 +40,27 @@ public class MyPageFragment extends Fragment {
 
         Bundle extra = getArguments();
         if(extra != null){
+            // 상단 아이디, 포인트
             String loginId = extra.getString("loginId");
             String loginPoint = extra.getString("loginPoint");
+            
+            // 하단 비번, 전번, 지역
+            String loginPw = extra.getString("loginPw");
+            String loginPhone = extra.getString("loginPhone");
+            String loginReg = extra.getString("loginRegion");
 
-            edit_mypage_pw.setText(loginId+"님의 포인트내역");
-            tv_mypage_point.setText(loginPoint+"P");
+            tv_mypage_id.setText(loginId);
+            tv_mypage_point.setText(loginPoint);
+
+            
+
+            edit_mypage_pw.setText(loginPw);
+            edit_mypage_phone.setText(loginPhone);
+            edit_mypage_region.setText(loginReg);
+
         }
+
+
 
 
         // 회원테이블에서 아이디  가져오기

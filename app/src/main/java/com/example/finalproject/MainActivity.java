@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -74,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("loginPoint",loginPoint);
 
         myPageFragment.setArguments(bundle);                           //로그인정보보내기
-
         pointFragment.setArguments(bundle);                           //로그인정보보내기
 
         btn_camera = findViewById(R.id.btn_camera);
@@ -112,7 +113,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void executeFragment(Fragment fragment) {
         //replace(FrameLayout id명, Fragment객체): FrameLayout에 Fragment화면을 설정
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame,fragment).commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame, fragment).commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.frame,fragment).commit();
     }
 
 }

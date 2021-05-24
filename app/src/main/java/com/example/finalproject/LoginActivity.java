@@ -100,12 +100,6 @@ public class LoginActivity extends AppCompatActivity{
                                     loginRegion = loginInfo.getString("member_region");
                                     loginPoint = loginInfo.getInt("member_point");
 
-
-
-
-
-
-
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -115,7 +109,7 @@ public class LoginActivity extends AppCompatActivity{
                                 } else{
                                     Log.d("로그인여부",loginId);
                                     Log.d("로그인여부", String.valueOf(loginPoint));
-                                    Toast.makeText(LoginActivity.this,response,Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this,"환영합니다^^",Toast.LENGTH_SHORT).show();
                                     Intent login_intent = new Intent(getApplicationContext(), MainActivity.class);
 
                                     login_intent.putExtra("loginId",loginId);

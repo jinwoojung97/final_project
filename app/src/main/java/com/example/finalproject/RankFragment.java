@@ -32,11 +32,11 @@ public class RankFragment extends Fragment {
     private ListView rank_lv;
     private ArrayList<RankVO> data;
     private RankAdapter adapter;
-//    private String [] rankRegion ={"광산구","북구","서구","남구","동구"};
+    private String [] rankRegion ={"광산구","북구","서구","남구","동구"};
     private int[] rankImgs = {R.drawable.medal, R.drawable.eunmedal, R.drawable.dongmedal, R.drawable.medal4, R.drawable.medal4};
     private TextView tv_whendate;
     private SimpleDateFormat mFormat = new SimpleDateFormat(("yyyy년 M월 d일")); //날짜포맷
-    RequestQueue requestQueue;
+    private RequestQueue requestQueue;
 
    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,12 +57,6 @@ public class RankFragment extends Fragment {
        rank_lv=fragment.findViewById(R.id.rank_lv);
 
        data= new ArrayList<RankVO>();
-
-//       for (int i = 0; i<rankRegion.length; i++){
-//           int img = rankImgs[i];
-//           String region = rankRegion[i];
-//           data.add(new RankVO(img,rankRegion,"1234명","99999p"));
-//       }  깔끔하게 하면될듯 0000명 0000p 요러케
 
        adapter=new RankAdapter(getActivity(),R.layout.rank_list_item,data);
        rank_lv.setAdapter(adapter);

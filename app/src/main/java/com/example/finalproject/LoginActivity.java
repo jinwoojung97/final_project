@@ -83,11 +83,10 @@ public class LoginActivity extends AppCompatActivity{
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-
                                 String loginId=null;
                                 String loginPw=null;
                                 String loginPhone=null;
-                                String loginReg=null;
+                                String loginRegion=null;
                                 int loginPoint = 0;
 
                                 try {
@@ -98,26 +97,31 @@ public class LoginActivity extends AppCompatActivity{
                                     loginId = loginInfo.getString("member_id");
                                     loginPw = loginInfo.getString("member_pw");
                                     loginPhone = loginInfo.getString("member_phone");
-                                    loginReg = loginInfo.getString("member_reg");
+                                    loginRegion = loginInfo.getString("member_region");
                                     loginPoint = loginInfo.getInt("member_point");
+
+
+
+
+
+
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
                                 if(response.equals("")){
                                     Log.d("로그인여부",response);
                                     Toast.makeText(LoginActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();
                                 } else{
-                                    Log.d("로그인여부",response);
+                                    Log.d("로그인여부",loginId);
                                     Log.d("로그인여부", String.valueOf(loginPoint));
-                                    Toast.makeText(LoginActivity.this,"로그인성공",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this,response,Toast.LENGTH_SHORT).show();
                                     Intent login_intent = new Intent(getApplicationContext(), MainActivity.class);
 
                                     login_intent.putExtra("loginId",loginId);
                                     login_intent.putExtra("loginPw",loginPw);
                                     login_intent.putExtra("loginPhone",loginPhone);
-                                    login_intent.putExtra("loginReg",loginReg);
+                                    login_intent.putExtra("loginRegion",loginRegion);
                                     login_intent.putExtra("loginPoint",String.valueOf(loginPoint));
                                     startActivity(login_intent);
                                     finish();

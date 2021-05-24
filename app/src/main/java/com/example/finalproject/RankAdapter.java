@@ -58,10 +58,10 @@ public class RankAdapter  extends BaseAdapter {
         }
 
         holder = (RankViewHolder) convertView.getTag();
-        holder.img_medal.setImageResource(data.get(position).getImg_medal());
-        holder.tv_rank_region.setText(data.get(position).getRank_region());
-        holder.tv_rank_count.setText(data.get(position).getRank_count());
-        holder.tv_rank_total.setText(data.get(position).getRank_total());
+        holder.img_medal.setImageResource(data.get(position).getImg_medal());   //이거 추가
+        holder.tv_rank_region.setText(data.get(position).getRegion());
+        holder.tv_rank_count.setText(data.get(position).getCountId());
+        holder.tv_rank_total.setText(data.get(position).getTotalPoint());
 
 
 

@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,9 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 
 public class PointFragment extends Fragment {
 
@@ -24,6 +28,8 @@ public class PointFragment extends Fragment {
     private ArrayList<PointVO> data;
     private PointViewHoler adapter;
     RequestQueue requestQueue;
+
+    String result;
 
     TextView tv_point_id, tv_pointmoney;
 
@@ -38,6 +44,8 @@ public class PointFragment extends Fragment {
         tv_point_id = fragment.findViewById(R.id.tv_point_id);
         tv_pointmoney = fragment.findViewById(R.id.tv_pointmoney);
 
+
+
         //String loginId;
        //String loginPoint;
 
@@ -48,13 +56,12 @@ public class PointFragment extends Fragment {
 
             tv_point_id.setText(loginId+"님의 포인트내역");
             tv_pointmoney.setText(loginPoint+"P");
+
+
         }
-
-
-
-
-
 
         return fragment;
     }
+
+
 }

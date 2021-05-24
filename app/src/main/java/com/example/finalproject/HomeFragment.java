@@ -21,6 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 
 public class HomeFragment extends Fragment {
 
@@ -32,6 +35,7 @@ public class HomeFragment extends Fragment {
     Context activity;
     int question_count; // 자동으로 0 잡힘
     ImageView mainimg;
+    String loginId;
 
 
     // 퀴즈 문제
@@ -41,7 +45,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        / Inflate the layout for this fragment
         View fragment = inflater.inflate(R.layout.fragment_home, container, false);
 
         activity = container.getContext();
@@ -55,6 +58,11 @@ public class HomeFragment extends Fragment {
         btn_no = fragment.findViewById(R.id.btn_no);
         img_rank = fragment.findViewById(R.id.img_rank);
         mainimg = fragment.findViewById(R.id.mainimg);
+
+        Bundle extra = getArguments();
+        if(extra != null){
+            loginId = extra.getString("loginId");
+        }
 
 
         // 퀴즈 정답
@@ -102,12 +110,14 @@ public class HomeFragment extends Fragment {
         btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), PopupActivity.class);
+                Intent popup_intent = new Intent(getContext(), PopupActivity.class);
+                popup_intent.putExtra("loginId",loginId);
 
                 if (question_count == 0) {
-                    intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "1");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "1");
+
+                    startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
                     if (img == 6) {
@@ -117,9 +127,9 @@ public class HomeFragment extends Fragment {
                     }
                     mainimg.setImageResource(question_list[img]);
                 } else if (question_count == 1) {
-                    intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "3");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "3");
+                    startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
                     if (img == 6) {
@@ -129,9 +139,9 @@ public class HomeFragment extends Fragment {
                     }
                     mainimg.setImageResource(question_list[img]);
                 } else if (question_count == 2) {
-                    intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "2");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "2");
+                    startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
                     if (img == 6) {
@@ -141,9 +151,9 @@ public class HomeFragment extends Fragment {
                     }
                     mainimg.setImageResource(question_list[img]);
                 } else if (question_count == 3) {
-                    intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "2");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "2");
+                    startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
                     if (img == 6) {
@@ -153,9 +163,9 @@ public class HomeFragment extends Fragment {
                     }
                     mainimg.setImageResource(question_list[img]);
                 }else if (question_count == 4) {
-                    intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "2");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "2");
+                    startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
                     if (img == 6) {
@@ -165,9 +175,9 @@ public class HomeFragment extends Fragment {
                     }
                     mainimg.setImageResource(question_list[img]);
                 }else if (question_count == 5) {
-                    intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "3");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "3");
+                    startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
                     if (img == 6) {
@@ -192,11 +202,13 @@ public class HomeFragment extends Fragment {
         btn_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), PopupActivity.class);
+                Intent popup_intent = new Intent(getContext(), PopupActivity.class);
+                popup_intent.putExtra("loginId",loginId);
+
                 if (question_count == 0) {
-                    intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "2");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "2");
+                    startActivityForResult(popup_intent, POINTDATA);
                     if (img == 6) {
                         img = 0;
                     } else {
@@ -205,9 +217,9 @@ public class HomeFragment extends Fragment {
                     mainimg.setImageResource(question_list[img]);
                 }
                 else if (question_count == 1) {
-                    intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "2");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "2");
+                    startActivityForResult(popup_intent, POINTDATA);
                     if (img == 6) {
                         img = 0;
                     } else {
@@ -216,9 +228,9 @@ public class HomeFragment extends Fragment {
                     mainimg.setImageResource(question_list[img]);
                 }
                 else if (question_count == 2) {
-                    intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "3");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "3");
+                    startActivityForResult(popup_intent, POINTDATA);
                     if (img == 6) {
                         img = 0;
                     } else {
@@ -227,9 +239,9 @@ public class HomeFragment extends Fragment {
                     mainimg.setImageResource(question_list[img]);
                 }
                 else if (question_count == 3) {
-                    intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "3");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "3");
+                    startActivityForResult(popup_intent, POINTDATA);
                     if (img == 6) {
                         img = 0;
                     } else {
@@ -237,9 +249,9 @@ public class HomeFragment extends Fragment {
                     }
                     mainimg.setImageResource(question_list[img]);
                 }else if (question_count == 4) {
-                    intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "2");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "3");
+                    startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
                     if (img == 6) {
@@ -249,9 +261,9 @@ public class HomeFragment extends Fragment {
                     }
                     mainimg.setImageResource(question_list[img]);
                 }else if (question_count == 5) {
-                    intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    intent.putExtra("result", "3");
-                    startActivityForResult(intent, POINTDATA);
+                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "3");
+                    startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
                     if (img == 6) {
@@ -269,6 +281,7 @@ public class HomeFragment extends Fragment {
                     mainimg.setImageResource(question_list[img]);
 
                 }
+
 
 
             }
@@ -311,6 +324,7 @@ public class HomeFragment extends Fragment {
             }
         }
     }
+
 
 
 }

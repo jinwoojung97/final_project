@@ -26,6 +26,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,11 +49,6 @@ public class LoginActivity extends AppCompatActivity{
         edit_login_pw = findViewById(R.id.edit_login_pw);
         btn_login_login = findViewById(R.id.btn_login_login);
         btn_login_join = findViewById(R.id.btn_login_join);
-
-
-
-
-
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
@@ -84,17 +83,35 @@ public class LoginActivity extends AppCompatActivity{
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+                                String loginId=null;
+                                int loginPoint = 0;
 
+                                try {
+                                    JSONArray loginInfos = new JSONArray(response);
+
+
+                                    JSONObject loginInfo = (JSONObject)loginInfos.get(0);
+                                    loginId = loginInfo.getString("member_id");
+                                    loginPoint = loginInfo.getInt("member_point");
+
+
+
+
+
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                 if(response.equals("")){
                                     Log.d("로그인여부",response);
                                     Toast.makeText(LoginActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();
                                 } else{
-                                    Log.d("로그인여부",response);
-
+                                    Log.d("로그인여부",loginId);
+                                    Log.d("로그인여부", String.valueOf(loginPoint));
+                                    Toast.makeText(LoginActivity.this,response,Toast.LENGTH_SHORT).show();
                                     Intent login_intent = new Intent(getApplicationContext(), MainActivity.class);
                                     String login_info =response;
-                                    Toast.makeText(LoginActivity.this,login_info,Toast.LENGTH_SHORT).show();
-
                                     login_intent.putExtra("login",login_info);
                                     startActivity(login_intent);
                                     finish();

@@ -14,6 +14,8 @@ public class RankVO {
         this.rank_total = rank_total;
     }
 
+
+
     public int getImg_medal() {
         return img_medal;
     }

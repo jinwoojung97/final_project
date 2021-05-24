@@ -131,6 +131,7 @@ public class PopupActivity extends Activity {
                 popup_intent.putExtra("result", "이미 적립되었습니다");
             }
             //액티비티(팝업) 닫기
+
             finish();
 
     }

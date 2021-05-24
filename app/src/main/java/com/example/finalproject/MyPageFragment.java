@@ -31,12 +31,15 @@ public class MyPageFragment extends Fragment {
     String loginId, loginPoint;
     ImageView img_mypage_logout;
 
+    PointFragment pointFragment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragment = inflater.inflate(R.layout.fragment_my_page, container, false);
 
+        pointFragment = new PointFragment();
 
         tv_mypage_id = fragment.findViewById(R.id.tv_mypage_id);
         tv_mypage_point = fragment.findViewById(R.id.tv_mypage_point);
@@ -73,9 +76,11 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                Bundle bundle = new Bundle(2);
+//                Bundle bundle = new Bundle();
 //                bundle.putString("loginId", loginId);
 //                bundle.putString("loginPoint", loginPoint);
+//                pointFragment.setArguments(bundle);
+
 //              fragment에서 다른 fragment로 넘어가는 작업
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 PointFragment pointFragment = new PointFragment();
@@ -92,6 +97,14 @@ public class MyPageFragment extends Fragment {
                 Toast.makeText(getActivity(),"로그아웃 하였습니다..",Toast.LENGTH_SHORT).show();
                 Intent login_intent = new Intent(getActivity(),LoginActivity.class);
                 startActivity(login_intent);
+            }
+        });
+
+        btn_mypage_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
             }
         });
 

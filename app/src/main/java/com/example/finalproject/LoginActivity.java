@@ -92,8 +92,8 @@ public class LoginActivity extends AppCompatActivity{
                                 try {
                                     JSONArray loginInfos = new JSONArray(response);
 
-
                                     JSONObject loginInfo = (JSONObject)loginInfos.get(0);
+
                                     loginId = loginInfo.getString("member_id");
                                     loginPw = loginInfo.getString("member_pw");
                                     loginPhone = loginInfo.getString("member_phone");

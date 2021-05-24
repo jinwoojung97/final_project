@@ -74,7 +74,7 @@ public class RankFragment extends Fragment {
                    @Override
                    public void onResponse(String response) {
                        Log.d("네트워크통신",response);
-                       JSONObject jsonObject = null;
+//                       JSONObject jsonObject = null;
                        try {
                            // 각 구별 랭킹데이터 보여주기
                            JSONArray rankRegion = new JSONArray(response);

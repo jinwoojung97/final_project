@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +20,14 @@ import java.util.Map;
 
 public class MyPageFragment extends Fragment {
 
+    public static MyPageFragment newInstance(){
+        return new MyPageFragment();
+    }
+
     TextView tv_mypage_id, tv_mypage_point;
     EditText edit_mypage_pw, edit_mypage_phone, edit_mypage_region;
     Button btn_mypage_point, btn_mypage_update;
-    String loginId;
+    String loginId, loginPoint;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +48,7 @@ public class MyPageFragment extends Fragment {
         if(extra != null){
             // 상단 아이디, 포인트
             loginId = extra.getString("loginId");
-            String loginPoint = extra.getString("loginPoint");
+            loginPoint = extra.getString("loginPoint");
             
             // 하단 비번, 전번, 지역
             String loginPw = extra.getString("loginPw");
@@ -59,9 +64,6 @@ public class MyPageFragment extends Fragment {
 
         }
 
-
-
-
         // 회원테이블에서 아이디  가져오기
         // 포인트테이블에서 가져오기
 
@@ -69,8 +71,16 @@ public class MyPageFragment extends Fragment {
         btn_mypage_point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), PointFragment.class);
-                startActivity(intent);
+
+//                Bundle bundle = new Bundle(2);
+//                bundle.putString("loginId", loginId);
+//                bundle.putString("loginPoint", loginPoint);
+//
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                PointFragment pointFragment = new PointFragment();
+                fragmentTransaction.replace(R.id.frame, pointFragment);
+
+                fragmentTransaction.commit();
             }
         });
 
@@ -81,7 +91,9 @@ public class MyPageFragment extends Fragment {
 
             }
         });
-        
+
         return fragment;
+
     }
+
 }

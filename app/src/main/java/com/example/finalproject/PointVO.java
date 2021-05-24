@@ -3,17 +3,15 @@ package com.example.finalproject;
 public class PointVO {
 
     private String point_id;
-    private String point_money;
+    private int point_money;
     private String point_date;
     private String point_content;
-    private String point_total;
 
-    public PointVO(String point_id, String point_money, String point_date, String point_content, String point_total) {
+    public PointVO(String point_id, int point_money, String point_date, String point_content) {
         this.point_id = point_id;
         this.point_money = point_money;
         this.point_date = point_date;
         this.point_content = point_content;
-        this.point_total = point_total;
     }
 
     public String getPoint_id() {
@@ -24,11 +22,11 @@ public class PointVO {
         this.point_id = point_id;
     }
 
-    public String getPoint_money() {
+    public int getPoint_money() {
         return point_money;
     }
 
-    public void setPoint_money(String point_money) {
+    public void setPoint_money(int point_money) {
         this.point_money = point_money;
     }
 
@@ -46,13 +44,5 @@ public class PointVO {
 
     public void setPoint_content(String point_content) {
         this.point_content = point_content;
-    }
-
-    public String getPoint_total() {
-        return point_total;
-    }
-
-    public void setPoint_total(String point_total) {
-        this.point_total = point_total;
     }
 }

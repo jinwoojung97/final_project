@@ -22,6 +22,7 @@ public class MyPageFragment extends Fragment {
     TextView tv_mypage_id, tv_mypage_point;
     EditText edit_mypage_pw, edit_mypage_phone, edit_mypage_region;
     Button btn_mypage_point, btn_mypage_update;
+    String loginId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,7 +42,7 @@ public class MyPageFragment extends Fragment {
         Bundle extra = getArguments();
         if(extra != null){
             // 상단 아이디, 포인트
-            String loginId = extra.getString("loginId");
+            loginId = extra.getString("loginId");
             String loginPoint = extra.getString("loginPoint");
             
             // 하단 비번, 전번, 지역
@@ -51,8 +52,6 @@ public class MyPageFragment extends Fragment {
 
             tv_mypage_id.setText(loginId);
             tv_mypage_point.setText(loginPoint);
-
-            
 
             edit_mypage_pw.setText(loginPw);
             edit_mypage_phone.setText(loginPhone);

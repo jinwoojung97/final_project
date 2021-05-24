@@ -70,7 +70,6 @@ public class PointFragment extends Fragment {
         StringRequest request1 = new StringRequest(
                 Request.Method.POST,
                 url2,
-
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

@@ -75,7 +75,7 @@ public class MyPageFragment extends Fragment {
 //                Bundle bundle = new Bundle(2);
 //                bundle.putString("loginId", loginId);
 //                bundle.putString("loginPoint", loginPoint);
-//
+//              fragment에서 다른 fragment로 넘어가는 작업
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 PointFragment pointFragment = new PointFragment();
                 fragmentTransaction.replace(R.id.frame, pointFragment);

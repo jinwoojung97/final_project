@@ -42,6 +42,15 @@ public class MyPageFragment extends Fragment {
         btn_mypage_point = fragment.findViewById(R.id.btn_mypage_point);
         btn_mypage_update = fragment.findViewById(R.id.btn_mypage_update);
 
+        Bundle extra = getArguments();
+        if(extra != null){
+            String loginId = extra.getString("loginId");
+            String loginPoint = extra.getString("loginPoint");
+
+            edit_mypage_pw.setText(loginId+"님의 포인트내역");
+            tv_mypage_point.setText(loginPoint+"P");
+        }
+
 
         // 회원테이블에서 아이디  가져오기
         // 포인트테이블에서 가져오기

@@ -48,9 +48,6 @@ public class PointFragment extends Fragment {
 
             tv_point_id.setText(loginId+"님의 포인트내역");
             tv_pointmoney.setText(loginPoint+"P");
-
-
-
         }
 
 

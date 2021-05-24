@@ -66,9 +66,15 @@ public class MainActivity extends AppCompatActivity {
         myPageFragment = new MyPageFragment();
 
 
-        Bundle bundle = new Bundle(2);
+        Bundle bundle = new Bundle(5);
         bundle.putString("loginId",loginId);
+        bundle.putString("loginPw",loginPw);
+        bundle.putString("loginPhone",loginPhone);
+        bundle.putString("loginRegion",loginRegion);
         bundle.putString("loginPoint",loginPoint);
+
+        myPageFragment.setArguments(bundle);                           //로그인정보보내기
+
         pointFragment.setArguments(bundle);                           //로그인정보보내기
 
         btn_camera = findViewById(R.id.btn_camera);

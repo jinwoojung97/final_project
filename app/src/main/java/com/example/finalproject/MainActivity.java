@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         myPageFragment.setArguments(bundle);                           //로그인정보보내기
         pointFragment.setArguments(bundle);                           //로그인정보보내기
 
+        homeFragment.setArguments(bundle);                     //로그인정보보내기
+
         btn_camera = findViewById(R.id.btn_camera);
 
         executeFragment(homeFragment);

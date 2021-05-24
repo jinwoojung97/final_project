@@ -28,40 +28,41 @@
             android:id="@+id/tv_mypage_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="144dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginBottom="8dp"
             android:text="kgyeonn"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/textView17"
-            app:layout_constraintHorizontal_bias="0.522"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/textView17"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tv_mypage_point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="144dp"
-            android:layout_marginEnd="64dp"
-            android:layout_marginRight="64dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginRight="80dp"
             android:text="580p"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView17"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/textView17" />
 
         <Button
             android:id="@+id/btn_mypage_point"
-            android:layout_width="333dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="278dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="28dp"
             android:text="포인트내역 보러가기"
             android:textSize="18sp"
             app:backgroundTint="#026FCC"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tv_mypage_id"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
         <TextView
@@ -69,13 +70,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="144dp"
-            android:layout_marginEnd="60dp"
-            android:layout_marginRight="60dp"
             android:text="|"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/tv_mypage_point"
+            app:layout_constraintHorizontal_bias="0.371"
+            app:layout_constraintStart_toEndOf="@+id/tv_mypage_id"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -85,8 +86,10 @@
             android:src="@drawable/mpinfo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_mypage_point" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_mypage_point"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView13"
@@ -98,10 +101,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.142"
+            app:layout_constraintHorizontal_bias="0.134"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_mypage_point"
-            app:layout_constraintVertical_bias="0.016" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView15"
@@ -147,7 +150,6 @@
             android:src="@drawable/user"
             app:layout_constraintBottom_toBottomOf="@+id/btn_mypage_point"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />

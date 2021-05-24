@@ -28,9 +28,7 @@ public class PointAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return data.size();
-    }
+    public int getCount() { return data.size(); }
 
     @Override
     public Object getItem(int position) {
@@ -52,13 +50,14 @@ public class PointAdapter extends BaseAdapter {
             holder.tv_point_day = convertView.findViewById(R.id.tv_point_day);
             holder.tv_point_content = convertView.findViewById(R.id.tv_point_content);
             holder.tv_point_money = convertView.findViewById(R.id.tv_point_money);
-            holder.tv_point_total = convertView.findViewById(R.id.tv_point_total);
+//            holder.tv_point_total = convertView.findViewById(R.id.tv_point_total);
 
             convertView.setTag(holder);
 
         }
         holder = (PointViewHoler)convertView.getTag();
-        holder.tv_point_money.setText(data.get(position).getPoint_money());
+        holder.img_point.setImageResource(data.get(position).getPoint_img());
+        holder.tv_point_money.setText(data.get(position).getPoint_p());
         holder.tv_point_content.setText(data.get(position).getPoint_content());
         holder.tv_point_day.setText(data.get(position).getPoint_date());
 

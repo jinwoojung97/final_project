@@ -33,7 +33,7 @@ public class RankFragment extends Fragment {
     private ArrayList<RankVO> data;
     private RankAdapter adapter;
     private String [] rankRegion ={"광산구","북구","서구","남구","동구"};
-    private int[] rankImgs = {R.drawable.medal, R.drawable.eunmedal, R.drawable.dongmedal, R.drawable.medal4, R.drawable.medal4};
+    private int[] img_medal = {R.drawable.medal, R.drawable.eunmedal, R.drawable.dongmedal, R.drawable.medal4, R.drawable.medal4, R.drawable.medal4, R.drawable.medal4, R.drawable.medal4};
     private TextView tv_whendate;
     private SimpleDateFormat mFormat = new SimpleDateFormat(("yyyy년 M월 d일")); //날짜포맷
     private RequestQueue requestQueue;
@@ -54,10 +54,6 @@ public class RankFragment extends Fragment {
         String time = mFormat.format(date);
         tv_whendate.setText(time); //현재 날짜로 설정
 
-       rank_lv=fragment.findViewById(R.id.rank_lv);
-
-       data= new ArrayList<RankVO>();
-
        adapter=new RankAdapter(getActivity(),R.layout.rank_list_item,data);
        rank_lv.setAdapter(adapter);
 
@@ -65,10 +61,12 @@ public class RankFragment extends Fragment {
        requestQueue = Volley.newRequestQueue(getActivity());
        requestQueue.start();
 
+       rank_lv = fragment.findViewById(R.id.point_lv);
+
        String server_url="http://222.102.43.79:8088/AndroidServer/RankController";
 
        StringRequest request = new StringRequest(
-               Request.Method.GET,
+               Request.Method.POST,
                server_url,
                new Response.Listener<String>() {
                    @Override
@@ -80,19 +78,28 @@ public class RankFragment extends Fragment {
                            JSONArray rankRegion = new JSONArray(response);
 
                            for (int i = 0; i < rankRegion.length(); i++) {
-                               JSONObject rank = (JSONObject) rankRegion.get(i);
-                               Log.d("지역",rank.getString("region"));
+
+                               JSONObject rank = (JSONObject)rankRegion.get(i);
+
+//                               Log.d("volly",rank.getString("region"));
 
                                RankVO vo = new RankVO(
-                                       rankImgs[i],   //이미지 추가
+                                       img_medal[i],   //이미지 추가
                                        rank.getString("region"),
                                        rank.getString("totalPoint")+"P",
                                        rank.getString("countId")+"명"
                                );
-
                                data.add(vo);
+                               if(data != null){
+                                   Log.d("data", String.valueOf(data));
+
+                               }else{
+                                   Log.d("data","뭘까");
+                               }
                            }
+
                            adapter.notifyDataSetChanged(); // 어댑터 갱신
+
                        } catch (JSONException e) {
                            e.printStackTrace();
                        }

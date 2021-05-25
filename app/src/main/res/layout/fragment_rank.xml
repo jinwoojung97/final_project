@@ -89,7 +89,7 @@
                 android:headerDividersEnabled="false"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView10"
                 app:layout_constraintEnd_toEndOf="@+id/imageView10"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="1.0"
 
 
                 app:layout_constraintStart_toStartOf="@+id/imageView10"

@@ -1,8 +1,11 @@
 package com.example.finalproject;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -12,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,6 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class PointFragment extends Fragment {
 
@@ -41,6 +47,8 @@ public class PointFragment extends Fragment {
     RequestQueue requestQueue;
     String loginId;
     int img_point = R.drawable.coin;
+
+
 
 
 
@@ -59,6 +67,12 @@ public class PointFragment extends Fragment {
         //String loginId;
         //String loginPoint;
 
+
+
+
+
+
+
         adapter=new PointAdapter(getActivity(),R.layout.point_list_item,data);
         point_lv.setAdapter(adapter);
 
@@ -67,13 +81,17 @@ public class PointFragment extends Fragment {
         requestQueue.start();
 
         Bundle extra = getArguments();
-        if(extra != null){
+        if(extra != null) {
             loginId = extra.getString("loginId");
             String loginPoint = extra.getString("loginPoint");
+////            //int형으로 바꿔주기
+//            int num = Integer.parseInt((loginPoint));
 
-            tv_point_id.setText(loginId+"님의 포인트내역");
-            tv_pointmoney.setText(loginPoint+"P");
+
+            tv_point_id.setText(loginId + "님의 포인트내역");
+            tv_pointmoney.setText(loginPoint + "P");
         }
+
         //여기까지가 진우씨가 하신거자나요 ??그런거같애요!
         point_lv = fragment.findViewById(R.id.point_lv);
 
@@ -144,9 +162,8 @@ public class PointFragment extends Fragment {
 
     }
 
-
-
-
+    private void setResult(int resultOk, Intent popup_intent) {
+    }
 
 
 }

@@ -145,8 +145,4 @@ public class PointFragment extends Fragment {
     }
 
 
-
-
-
-
 }

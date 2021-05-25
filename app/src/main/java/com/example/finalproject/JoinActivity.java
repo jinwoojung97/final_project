@@ -104,50 +104,52 @@ public class JoinActivity extends AppCompatActivity {
 
                 if (join_id.length() == 0 || join_pw.length() == 0 || join_phone.length() == 0 || join_region.length() == 0) {
                     Toast.makeText(JoinActivity.this, "필수 입력값을 작성해주세요!", Toast.LENGTH_SHORT).show();
-                }
+                }else{
+                    //서버주소
+                    String server_url ="http://222.102.43.79:8088/AndroidServer/JoinController";
 
-                //서버주소
-                String server_url ="http://222.102.43.79:8088/AndroidServer/JoinController";
-
-                StringRequest request = new StringRequest(
-                        Request.Method.POST,
-                        server_url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                // 가입 성공 시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
-                                if(response.equals("1")){
-                                    Toast.makeText(JoinActivity.this, "가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
-                                    Intent login_intent = new Intent(getApplicationContext(),LoginActivity.class);
-                                    startActivity(login_intent);
-                                    finish();
-                                }else if(response.equals("0")){
-                                    Toast.makeText(JoinActivity.this,"이미 존재하는 아이디 입니다.",Toast.LENGTH_SHORT).show();
+                    StringRequest request = new StringRequest(
+                            Request.Method.POST,
+                            server_url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    // 가입 성공 시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
+                                    if(response.equals("1")){
+                                        Toast.makeText(JoinActivity.this, "가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                        Intent login_intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                        startActivity(login_intent);
+                                        finish();
+                                    }else if(response.equals("0")){
+                                        Toast.makeText(JoinActivity.this,"이미 존재하는 아이디 입니다.",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.v("hhd",error.getMessage());
                                 }
                             }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.v("hhd",error.getMessage());
-                            }
+                    ){
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+
+                            //키값 전송
+                            params.put("join_id",join_id);
+                            params.put("join_pw",join_pw);
+                            params.put("join_phone",join_phone);
+                            params.put("join_region",region);
+
+                            return params;
                         }
-                ){
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
+                    };
+                    requestQueue.add(request);
 
-                        //키값 전송
-                        params.put("join_id",join_id);
-                        params.put("join_pw",join_pw);
-                        params.put("join_phone",join_phone);
-                        params.put("join_region",region);
+                    Log.v("hhd","Join Click");
+                }
 
-                        return params;
-                    }
-                };
-                requestQueue.add(request);
 
-                Log.v("hhd","Join Click");
             }
         });
 

@@ -81,7 +81,7 @@ public class RankFragment extends Fragment {
 
                            for (int i = 0; i < rankRegion.length(); i++) {
                                JSONObject rank = (JSONObject) rankRegion.get(i);
-                               Log.d("volly",rank.getString("region"));
+                               Log.d("지역",rank.getString("region"));
 
                                RankVO vo = new RankVO(
                                        rankImgs[i],   //이미지 추가

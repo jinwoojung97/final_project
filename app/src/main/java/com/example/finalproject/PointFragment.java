@@ -66,16 +66,6 @@ public class PointFragment extends Fragment {
         requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.start();
 
-//        // 마이페이지에서 정보를 받아옴
-//        if (getArguments()!=null){
-//            loginId = getArguments().getString("loginId");
-//            String loginPoint = getArguments().getString("loginPoint");
-//
-//            tv_point_id.setText(loginId+"님의 포인트내역");
-//            tv_pointmoney.setText(loginPoint+"P");
-//        }
-
-
         Bundle extra = getArguments();
         if(extra != null){
             loginId = extra.getString("loginId");

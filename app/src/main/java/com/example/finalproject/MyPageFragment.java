@@ -10,11 +10,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.textclassifier.TextLanguage;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +38,7 @@ public class MyPageFragment extends Fragment {
     Button btn_mypage_point, btn_mypage_update;
     String loginId, loginPoint;
     ImageView img_mypage_logout;
+    RequestQueue requestQueue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,15 +81,6 @@ public class MyPageFragment extends Fragment {
         btn_mypage_point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Bundle bundle = new Bundle(2);
-//                bundle.putString("loginId", loginId);
-//                bundle.putString("loginPoint", loginPoint);
-//
-//                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                PointFragment pointFragment = new PointFragment();
-//                fragmentTransaction.replace(R.id.frame, pointFragment);
-//                fragmentTransaction.commit();
                MainActivity.executeMove(R.id.item_point);
                 PointFragment pointFragment = new PointFragment();
                 executeFragment(pointFragment);
@@ -97,8 +97,55 @@ public class MyPageFragment extends Fragment {
             }
         });
 
+        btn_mypage_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String update_pw = edit_mypage_pw.getText().toString();
+                String update_phone = edit_mypage_phone.getText().toString();
+                String update_reg = edit_mypage_region.getText().toString();
 
+                if (update_pw.length() == 0||update_phone.length() == 0||update_reg.length() == 0){
+                    Toast.makeText(getContext(), "필수 입력값을 작성해주세요!", Toast.LENGTH_SHORT).show();
+                }
 
+                String server_url = "http://222.102.43.79:8088/AndroidServer/JoinController";
+
+                StringRequest request = new StringRequest(
+                        Request.Method.POST, server_url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // 변경 성공시 response 변수에 1값이 저장, 실패시 0
+                        if (response.equals("1")) {
+                            Toast.makeText(getContext(), "수정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                        } else if (response.equals("0")) {
+                            Toast.makeText(getContext(), "수정 실패.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.v("hhd", error.getMessage());
+                            }
+                        }
+                ){
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+
+                        //키값 전송
+                        params.put("join_id",loginId);
+                        params.put("join_pw",update_pw);
+                        params.put("join_phone",update_phone);
+                        params.put("join_region",update_reg);
+
+                        return params;
+                    }
+                };
+                requestQueue.(request);
+
+                Log.v("hhd", "Update Click");
+            }
+        });
 
         return fragment;
 

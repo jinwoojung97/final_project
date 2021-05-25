@@ -29,13 +29,13 @@ public class HomeFragment extends Fragment {
 
     private final int POINTDATA = 1001;
 
-    TextView tv_quiz, tv_region, tv_region_point, tv_rank;
+    TextView tv_quiz, tv_region, tv_rank;
     Button btn_camera, btn_yes, btn_no;
     ImageView img_rank;
     Context activity;
     int question_count; // 자동으로 0 잡힘
     ImageView mainimg;
-    String loginId;
+    String loginId,loginPw, loginRegion;
 
 
     // 퀴즈 문제
@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
 
         tv_quiz = fragment.findViewById(R.id.tv_quiz);
         tv_region = fragment.findViewById(R.id.tv_region);
-        tv_region_point = fragment.findViewById(R.id.tv_region_point);
+
         tv_rank = fragment.findViewById(R.id.tv_rank);
         btn_camera = fragment.findViewById(R.id.btn_camera);
         btn_yes = fragment.findViewById(R.id.btn_yes);
@@ -62,6 +62,8 @@ public class HomeFragment extends Fragment {
         Bundle extra = getArguments();
         if(extra != null){
             loginId = extra.getString("loginId");
+            loginPw = extra.getString("loginPw");
+            loginRegion = extra.getString("loginRegion");
         }
 
 
@@ -112,6 +114,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent popup_intent = new Intent(getContext(), PopupActivity.class);
                 popup_intent.putExtra("loginId",loginId);
+                popup_intent.putExtra("loginPw",loginPw);
 
                 if (question_count == 0) {
                     popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
@@ -287,6 +290,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        tv_region.setText(loginRegion);
         //우리동네 랭킹 이미지 뷰 클릭 시 랭킹페이지로 전환
         img_rank.setOnClickListener(new View.OnClickListener() {
             @Override

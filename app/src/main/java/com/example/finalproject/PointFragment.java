@@ -3,11 +3,13 @@ package com.example.finalproject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,9 +47,9 @@ public class PointFragment extends Fragment {
     private PointAdapter adapter;
     private Context context;
     RequestQueue requestQueue;
-    String loginId;
     int img_point = R.drawable.coin;
-
+    Intent point_intent;
+    String loginId, loginPw;
 
 
 
@@ -56,6 +58,9 @@ public class PointFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+
         View fragment = inflater.inflate(R.layout.fragment_point, container, false);
         data = new ArrayList<PointVO>();
 
@@ -66,11 +71,6 @@ public class PointFragment extends Fragment {
         point_lv = fragment.findViewById(R.id.point_lv);
         //String loginId;
         //String loginPoint;
-
-
-
-
-
 
 
         adapter=new PointAdapter(getActivity(),R.layout.point_list_item,data);
@@ -89,11 +89,13 @@ public class PointFragment extends Fragment {
 
 
             tv_point_id.setText(loginId + "님의 포인트내역");
-            tv_pointmoney.setText(loginPoint + "P");
+
         }
 
         //여기까지가 진우씨가 하신거자나요 ??그런거같애요!
         point_lv = fragment.findViewById(R.id.point_lv);
+
+        login_reset();
 
         //String member_id = extra.getString("loginId");;
 
@@ -164,6 +166,75 @@ public class PointFragment extends Fragment {
 
     private void setResult(int resultOk, Intent popup_intent) {
     }
+    public void login_reset(){
 
+        point_intent = getActivity().getIntent();
+
+        //로그인정보 가져오기
+
+        loginId = point_intent.getStringExtra("loginId");  //로그인정보 가져오기
+        loginPw = point_intent.getStringExtra("loginPw");
+        Log.d("로그인정보 ",loginId);
+
+        String server_url="http://222.102.43.79:8088/AndroidServer/LoginController";
+
+        StringRequest request2 = new StringRequest(
+                Request.Method.POST,
+                server_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        String loginId=null;
+                        String loginPw=null;
+                        String loginPhone=null;
+                        String loginRegion=null;
+                        int loginPoint = 0;
+
+                        try {
+                            JSONArray loginInfos = new JSONArray(response);
+
+
+                            JSONObject loginInfo = (JSONObject)loginInfos.get(0);
+                            loginId = loginInfo.getString("member_id");
+                            loginPw = loginInfo.getString("member_pw");
+                            loginPhone = loginInfo.getString("member_phone");
+                            loginRegion = loginInfo.getString("member_region");
+                            loginPoint = loginInfo.getInt("member_point");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if(response.equals("")){
+                            Log.d("로그인여부",response);
+                        } else{
+                            Log.d("로그인여부",loginId);
+                            Log.d("로그인여부", String.valueOf(loginPoint));
+                            //Toast.makeText(PopupActivity.this,"환영합니다^^",Toast.LENGTH_SHORT).show();
+
+                            tv_pointmoney.setText(loginPoint + "P");
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(PopupActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("login_id", loginId);
+                params.put("login_pw", loginPw);
+
+                return params; //★★★★★
+            }
+        };
+        requestQueue.add(request2);
+
+    }
 
 }

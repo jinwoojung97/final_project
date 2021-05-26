@@ -1,7 +1,9 @@
 package com.example.finalproject;
 
-import android.os.Bundle;
 
+import android.os.Bundle;
+import android.content.Intent;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -10,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,6 +30,8 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RankFragment extends Fragment {
@@ -37,12 +43,15 @@ public class RankFragment extends Fragment {
     private TextView tv_whendate;
     private SimpleDateFormat mFormat = new SimpleDateFormat(("yyyy년 M월 d일")); //날짜포맷
     private RequestQueue requestQueue;
-
+    String loginId,loginPw;
+    Intent rank_intent;
    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View fragment = inflater.inflate(R.layout.fragment_rank, container, false);
+
+
 
         // 생성자 초기화
         rank_lv = fragment.findViewById(R.id.rank_lv);
@@ -62,6 +71,8 @@ public class RankFragment extends Fragment {
        requestQueue.start();
 
        rank_lv = fragment.findViewById(R.id.point_lv);
+
+
 
        String server_url="http://222.102.43.79:8088/AndroidServer/RankController";
 
@@ -114,5 +125,8 @@ public class RankFragment extends Fragment {
        //요청보내기
        requestQueue.add(request);
        return fragment;
-       }
-    }
+
+   }
+
+
+}

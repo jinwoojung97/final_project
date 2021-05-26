@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.textclassifier.TextLanguage;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,11 +41,10 @@ public class MyPageFragment extends Fragment {
     TextView tv_mypage_id, tv_mypage_point;
     EditText edit_mypage_pw, edit_mypage_phone, edit_mypage_region;
     Button btn_mypage_point, btn_mypage_update;
-    String loginId, loginPoint;
+    String loginId, loginPoint, loginPw;
     ImageView img_mypage_logout;
+    Intent point_intent;
     RequestQueue requestQueue;
-
-    String updatePw, updatePhone, updateReg;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,9 +52,9 @@ public class MyPageFragment extends Fragment {
         // Inflate the layout for this fragment
         View fragment = inflater.inflate(R.layout.fragment_my_page, container, false);
 
+
         tv_mypage_id = fragment.findViewById(R.id.tv_mypage_id);
         tv_mypage_point = fragment.findViewById(R.id.tv_mypage_point);
-
         edit_mypage_pw = fragment.findViewById(R.id.edit_mypage_pw);
         edit_mypage_phone = fragment.findViewById(R.id.edit_mypage_phone);
         edit_mypage_region = fragment.findViewById(R.id.edit_mypage_region);
@@ -64,7 +62,6 @@ public class MyPageFragment extends Fragment {
         btn_mypage_update = fragment.findViewById(R.id.btn_mypage_update);
         img_mypage_logout = fragment.findViewById(R.id.img_mypage_logout);
 
-        // 요청 보내주는 객체 생성
         requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.start();
 
@@ -72,7 +69,7 @@ public class MyPageFragment extends Fragment {
         if(extra != null){
             // 상단 아이디, 포인트
             loginId = extra.getString("loginId");
-            loginPoint = extra.getString("loginPoint")+"p";
+            login_reset();
             
             // 하단 비번, 전번, 지역
             String loginPw = extra.getString("loginPw");
@@ -86,8 +83,6 @@ public class MyPageFragment extends Fragment {
             edit_mypage_phone.setText(loginPhone);
             edit_mypage_region.setText(loginReg);
 
-
-
         }
 
 
@@ -95,6 +90,15 @@ public class MyPageFragment extends Fragment {
         btn_mypage_point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                Bundle bundle = new Bundle(2);
+//                bundle.putString("loginId", loginId);
+//                bundle.putString("loginPoint", loginPoint);
+//
+//                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                PointFragment pointFragment = new PointFragment();
+//                fragmentTransaction.replace(R.id.frame, pointFragment);
+//                fragmentTransaction.commit();
                MainActivity.executeMove(R.id.item_point);
                 PointFragment pointFragment = new PointFragment();
                 executeFragment(pointFragment);
@@ -111,12 +115,8 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        btn_mypage_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
+
 
         return fragment;
 
@@ -124,5 +124,74 @@ public class MyPageFragment extends Fragment {
 
     private void executeFragment(PointFragment pointFragment) {
     }
+    public void login_reset(){
 
+        point_intent = getActivity().getIntent();
+
+        //로그인정보 가져오기
+
+        loginId = point_intent.getStringExtra("loginId");  //로그인정보 가져오기
+        loginPw = point_intent.getStringExtra("loginPw");
+        Log.d("로그인정보 ",loginId);
+
+        String server_url="http://222.102.43.79:8088/AndroidServer/LoginController";
+
+        StringRequest request2 = new StringRequest(
+                Request.Method.POST,
+                server_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        String loginId=null;
+                        String loginPw=null;
+                        String loginPhone=null;
+                        String loginRegion=null;
+                        int loginPoint = 0;
+
+                        try {
+                            JSONArray loginInfos = new JSONArray(response);
+
+
+                            JSONObject loginInfo = (JSONObject)loginInfos.get(0);
+                            loginId = loginInfo.getString("member_id");
+                            loginPw = loginInfo.getString("member_pw");
+                            loginPhone = loginInfo.getString("member_phone");
+                            loginRegion = loginInfo.getString("member_region");
+                            loginPoint = loginInfo.getInt("member_point");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if(response.equals("")){
+                            Log.d("로그인여부",response);
+                        } else{
+                            Log.d("로그인여부",loginId);
+                            Log.d("로그인여부", String.valueOf(loginPoint));
+                            //Toast.makeText(PopupActivity.this,"환영합니다^^",Toast.LENGTH_SHORT).show();
+
+                            tv_mypage_point.setText(loginPoint + "P");
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(PopupActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("login_id", loginId);
+                params.put("login_pw", loginPw);
+
+                return params; //★★★★★
+            }
+        };
+        requestQueue.add(request2);
+
+    }
 }

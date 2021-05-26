@@ -34,9 +34,7 @@ public class PopupActivity extends Activity {
     TextView txtText;
     String result;
     RequestQueue requestQueue;
-    int point_p = 100;
     String loginId,loginPw;
-
     Intent popup_intent;
 
 
@@ -81,7 +79,7 @@ public class PopupActivity extends Activity {
 
             if ("1".equals(result)) {
                 setResult(RESULT_OK, popup_intent);
-                 popup_intent.putExtra("result", "정답 100포인트 적금");
+                 popup_intent.putExtra("result", "정답 500포인트 적금");
 
                 String server_url="http://222.102.43.79:8088/AndroidServer/QuizController";
 
@@ -98,7 +96,7 @@ public class PopupActivity extends Activity {
                                 } else{
                                     Log.d("포인트 적립","성공");
 //                                    popup_intent.putExtra("result", "성공 100포인트 적금");
-                                    login_reset();
+//                                    login_reset();
                                     //Toast.makeText(PopupActivity.this,response,Toast.LENGTH_SHORT).show();
                                 }
                             }

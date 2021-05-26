@@ -96,7 +96,7 @@ public class PopupActivity extends Activity {
                                 } else{
                                     Log.d("포인트 적립","성공");
 //                                    popup_intent.putExtra("result", "성공 100포인트 적금");
-                                    login_reset();
+//                                    login_reset();
                                     //Toast.makeText(PopupActivity.this,response,Toast.LENGTH_SHORT).show();
                                 }
                             }

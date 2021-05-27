@@ -25,7 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" /> <!-- 팝업 Activity -->
+        <activity android:name=".MainActivity">
+
+        </activity> <!-- 팝업 Activity -->
         <activity
             android:name=".PopupActivity"
             android:theme="@android:style/Theme.Dialog" /> <!-- 특정폴더 공유하는데 사용하는 내용제공자 -->

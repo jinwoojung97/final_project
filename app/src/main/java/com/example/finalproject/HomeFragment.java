@@ -192,8 +192,10 @@ public class HomeFragment extends Fragment {
                     } else {
                         img++;
                     }
+
                     btn_yes.setEnabled(false);
                     btn_no.setEnabled(false);
+
                     mainimg.setImageResource(question_list[img]);
                 }else if(question_count == 6){
 
@@ -282,8 +284,10 @@ public class HomeFragment extends Fragment {
                     } else {
                         img++;
                     }
+
                     btn_yes.setEnabled(false);
                     btn_no.setEnabled(false);
+
                     mainimg.setImageResource(question_list[img]);
                 }else if(question_count == 6){
 

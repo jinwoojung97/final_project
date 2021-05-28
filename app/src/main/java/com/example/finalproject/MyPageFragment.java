@@ -1,5 +1,7 @@
 package com.example.finalproject;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -45,6 +47,7 @@ public class MyPageFragment extends Fragment {
     ImageView img_mypage_logout;
     Intent point_intent;
     RequestQueue requestQueue;
+    Context activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +55,7 @@ public class MyPageFragment extends Fragment {
         // Inflate the layout for this fragment
         View fragment = inflater.inflate(R.layout.fragment_my_page, container, false);
 
-
+        activity = container.getContext();
         tv_mypage_id = fragment.findViewById(R.id.tv_mypage_id);
         tv_mypage_point = fragment.findViewById(R.id.tv_mypage_point);
         edit_mypage_pw = fragment.findViewById(R.id.edit_mypage_pw);
@@ -84,6 +87,63 @@ public class MyPageFragment extends Fragment {
             edit_mypage_region.setText(loginReg);
 
         }
+        btn_mypage_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String UpdateId = loginId;
+                String UpdatePw = edit_mypage_pw.getText().toString();
+                String UpdateRegion = edit_mypage_region.getText().toString();
+                String UpdatePhone = edit_mypage_phone.getText().toString();
+
+                String server_url="http://222.102.43.79:8088/AndroidServer/UpdateController";
+
+                StringRequest request = new StringRequest(
+                        Request.Method.POST,
+                        server_url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // 회원정보 수정 성공시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
+
+                                String success = "회원정보 수정 성공";
+                                String fail = "회원정보 수정 실패";
+
+                                if(response.equals("1")){
+                                    Toast.makeText(activity, success , Toast.LENGTH_SHORT).show();
+                                    Log.d("정보수정 여부","성공");
+                                }else if(response.equals("0")){
+                                    Toast.makeText(activity, fail , Toast.LENGTH_SHORT).show();
+                                    Log.d("정보수정 여부","실패");
+                                }
+                            }
+
+                        },
+
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        }
+
+                ){
+                    @Nullable
+                    @Override
+                    protected Map<String,String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+
+                        params.put("login_id", UpdateId);
+                        params.put("login_pw",UpdatePw);
+                        params.put("login_region",UpdateRegion);
+                        params.put("login_phone",UpdatePhone);
+
+                        return params; //★★★★★
+                    }
+                };
+                requestQueue.add(request);
+            }
+        });
 
 
         // 포인트 조회버튼 클릭 시 포인트 조회페이지로 넘어감
@@ -124,6 +184,10 @@ public class MyPageFragment extends Fragment {
 
     private void executeFragment(PointFragment pointFragment) {
     }
+
+
+
+
     public void login_reset(){
 
         point_intent = getActivity().getIntent();

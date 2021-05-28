@@ -40,10 +40,11 @@ public class MyPageFragment extends Fragment {
         return new MyPageFragment();
     }
 
+
     TextView tv_mypage_id, tv_mypage_point;
     EditText edit_mypage_pw, edit_mypage_phone, edit_mypage_region;
     Button btn_mypage_point, btn_mypage_update;
-    String loginId, loginPoint, loginPw;
+    String loginId, loginPoint, loginPw,loginPhone,loginRegion;
     ImageView img_mypage_logout;
     Intent point_intent;
     RequestQueue requestQueue;
@@ -112,6 +113,8 @@ public class MyPageFragment extends Fragment {
                                 if(response.equals("1")){
                                     Toast.makeText(activity, success , Toast.LENGTH_SHORT).show();
                                     Log.d("정보수정 여부","성공");
+                                    Intent login_intent = new Intent(getActivity(),LoginActivity.class);
+                                    startActivity(login_intent);
                                 }else if(response.equals("0")){
                                     Toast.makeText(activity, fail , Toast.LENGTH_SHORT).show();
                                     Log.d("정보수정 여부","실패");
@@ -174,9 +177,6 @@ public class MyPageFragment extends Fragment {
                 startActivity(login_intent);
             }
         });
-
-
-
 
         return fragment;
 

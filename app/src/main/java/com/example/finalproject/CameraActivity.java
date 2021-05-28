@@ -12,12 +12,10 @@ import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,24 +23,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CameraActivity extends AppCompatActivity{
 
@@ -61,16 +46,12 @@ public class CameraActivity extends AppCompatActivity{
     boolean crop;   //크롭사진이 생성 되었는지 여부
     int usingCamera;//전면, 후면 중 어떤 카메라를 쓰고있는가 여부. Camera.CameraInfo.CAMERA_FACING_BACK, CAMERA_FACING_FRONT
 
-    private RequestQueue requestQueue;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         init();
 
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.start();
     }
 
     private void init(){
@@ -126,49 +107,6 @@ public class CameraActivity extends AppCompatActivity{
                     Bitmap bitmap = Bitmap.createBitmap(bitmaporigin, 0, 0,
                             bitmaporigin.getWidth(), bitmaporigin.getHeight(), matrix, true);
 
-                    // bit map 전송하기
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                    byte[] byteArray = byteArrayOutputStream .toByteArray();
-                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                    Log.v("hhd", encoded);
-                    String server_url ="http://222.102.43.79:9000/requestImg";
-                    Log.v("hhd", "step1");
-
-                    StringRequest request = new StringRequest(
-                            Request.Method.POST,
-                            server_url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    // 가입 성공 시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
-                                    Log.v("hhd", response);
-
-                                    String photo_url_str = "http://222.102.43.79:9000/showImg/"+response;
-
-                                    new DownloadImageTask(img_capture)
-                                            .execute(photo_url_str);
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.v("hhd",error.getMessage());
-                                }
-                            }
-                    ){
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-
-                            //키값 전송
-                            params.put("img",encoded);
-
-                            return params;
-                        }
-                    };
-                    requestQueue.add(request);
-
-                    Log.v("hhd", "step2");
                     //사진 원본 파일. 갤러리에서 보이며 /내장메모리/Pictures 에 저장.
                     img_name = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());   //이미지의 이름을 설정
                     String outUriStr = MediaStore.Images.Media.insertImage(getContentResolver(),//이미지 파일 생성
@@ -183,8 +121,8 @@ public class CameraActivity extends AppCompatActivity{
                     }
 
                     Toast.makeText(getApplicationContext(), "찍은 사진을 앨범에 저장했습니다.", Toast.LENGTH_LONG).show();
-                    Log.v("hhd", "step3");
-                    // cropImage();//이미지 크롭
+
+                    cropImage();//이미지 크롭
                     MediaScannerConnection.scanFile(getApplicationContext(),//앨범에 사진을 보여주기 위해 스캔
                             new String[]{photoUri.getPath()}, null,
                             new MediaScannerConnection.OnScanCompletedListener() {
@@ -315,32 +253,7 @@ public class CameraActivity extends AppCompatActivity{
         }
     }
 
-    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-                // bitmap을 갤러리에 저장 코드 추가
-
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 
 }
 

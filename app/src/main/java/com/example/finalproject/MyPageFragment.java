@@ -107,7 +107,7 @@ public class MyPageFragment extends Fragment {
                             public void onResponse(String response) {
                                 // 회원정보 수정 성공시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
 
-                                String success = "회원정보 수정 성공";
+                                String success = "회원정보 수정 성공! 재로그인 해주세요.";
                                 String fail = "회원정보 수정 실패";
 
                                 if(response.equals("1")){
@@ -115,6 +115,8 @@ public class MyPageFragment extends Fragment {
                                     Log.d("정보수정 여부","성공");
                                     Intent login_intent = new Intent(getActivity(),LoginActivity.class);
                                     startActivity(login_intent);
+                                    getActivity().finish();
+
                                 }else if(response.equals("0")){
                                     Toast.makeText(activity, fail , Toast.LENGTH_SHORT).show();
                                     Log.d("정보수정 여부","실패");

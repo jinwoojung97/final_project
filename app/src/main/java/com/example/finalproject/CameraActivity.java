@@ -9,7 +9,6 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.Rect;
 import android.hardware.Camera;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -126,20 +125,14 @@ public class CameraActivity extends AppCompatActivity{
 
                     Bitmap bitmap = Bitmap.createBitmap(bitmaporigin, 0, 0,
                             bitmaporigin.getWidth(), bitmaporigin.getHeight(), matrix, true);
-                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,672,1008,true);
-                    //사진크기 줄이기
-
-
-
-
 
                     // bit map 전송하기
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    resize.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
                     String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                     Log.v("hhd", encoded);
-                    String server_url ="http:/222.102.43.79:9000/requestImg";
+                    String server_url ="http://222.102.43.79:9000/requestImg";
                     Log.v("hhd", "step1");
 
                     StringRequest request = new StringRequest(
@@ -147,15 +140,14 @@ public class CameraActivity extends AppCompatActivity{
                             server_url,
                             new Response.Listener<String>() {
                                 @Override
-
                                 public void onResponse(String response) {
-
+                                    // 가입 성공 시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
                                     Log.v("hhd", response);
 
-                                    String photo_url_str = "http:/222.102.43.79:9000/showImg/"+response;
+                                    String photo_url_str = "http://222.102.43.79:9000/showImg/"+response;
 
                                     new DownloadImageTask(img_capture)
-                                            .execute(photo_url_str);   //결과 이미지 띄우기
+                                            .execute(photo_url_str);
                                 }
                             },
                             new Response.ErrorListener() {
@@ -205,7 +197,7 @@ public class CameraActivity extends AppCompatActivity{
                     cameraView.setVisibility(View.INVISIBLE);
 
                     // 아래 부분 주석을 풀 경우 사진 촬영 후에도 다시 프리뷰를 돌릴수 있음
-                    //camera.startPreview();
+                    camera.startPreview();
                 } catch (Exception e) {
                     Log.e("SampleCapture", "Failed to insert image.", e);
                 }

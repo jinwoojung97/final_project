@@ -9,6 +9,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -125,14 +126,20 @@ public class CameraActivity extends AppCompatActivity{
 
                     Bitmap bitmap = Bitmap.createBitmap(bitmaporigin, 0, 0,
                             bitmaporigin.getWidth(), bitmaporigin.getHeight(), matrix, true);
+                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,672,1008,true);
+                    //사진크기 줄이기
+
+
+
+
 
                     // bit map 전송하기
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    resize.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
                     String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                     Log.v("hhd", encoded);
-                    String server_url ="http:/172.30.1.27:9000/requestImg";
+                    String server_url ="http:/222.102.43.79:9000/requestImg";
                     Log.v("hhd", "step1");
 
                     StringRequest request = new StringRequest(
@@ -145,7 +152,7 @@ public class CameraActivity extends AppCompatActivity{
 
                                     Log.v("hhd", response);
 
-                                    String photo_url_str = "http:/172.30.1.27:9000/showImg/"+response;
+                                    String photo_url_str = "http:/222.102.43.79:9000/showImg/"+response;
 
                                     new DownloadImageTask(img_capture)
                                             .execute(photo_url_str);   //결과 이미지 띄우기

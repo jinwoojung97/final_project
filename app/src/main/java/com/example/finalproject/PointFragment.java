@@ -185,9 +185,6 @@ public class PointFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         String loginId=null;
-                        String loginPw=null;
-                        String loginPhone=null;
-                        String loginRegion=null;
                         int loginPoint = 0;
 
                         try {
@@ -196,9 +193,6 @@ public class PointFragment extends Fragment {
 
                             JSONObject loginInfo = (JSONObject)loginInfos.get(0);
                             loginId = loginInfo.getString("member_id");
-                            loginPw = loginInfo.getString("member_pw");
-                            loginPhone = loginInfo.getString("member_phone");
-                            loginRegion = loginInfo.getString("member_region");
                             loginPoint = loginInfo.getInt("member_point");
 
                         } catch (JSONException e) {

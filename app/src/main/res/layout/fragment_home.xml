@@ -83,7 +83,6 @@
                 android:id="@+id/tv_quiz"
                 android:layout_width="296dp"
                 android:layout_height="91dp"
-                android:text="즉석밥 용기는 일반쓰레기다"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"

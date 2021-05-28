@@ -59,6 +59,10 @@ public class HomeFragment extends Fragment {
         img_rank = fragment.findViewById(R.id.img_rank);
         mainimg = fragment.findViewById(R.id.mainimg);
 
+        if(img != 0) {
+            mainimg.setImageResource(question_list[img]);
+        }
+
         Bundle extra = getArguments();
         if(extra != null){
             loginId = extra.getString("loginId");

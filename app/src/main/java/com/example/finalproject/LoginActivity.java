@@ -103,10 +103,8 @@ public class LoginActivity extends AppCompatActivity{
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                                if(response.equals("")){
-                                    Log.d("로그인여부",response);
-                                    Toast.makeText(LoginActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();
-                                } else{
+                                if(login_id.equals(loginId) && login_pw.equals(loginPw)){
+
                                     Log.d("로그인여부",loginId);
                                     Log.d("로그인여부", String.valueOf(loginPoint));
                                     Toast.makeText(LoginActivity.this,"환영합니다^^",Toast.LENGTH_SHORT).show();
@@ -119,6 +117,9 @@ public class LoginActivity extends AppCompatActivity{
                                     login_intent.putExtra("loginPoint",String.valueOf(loginPoint));
                                     startActivity(login_intent);
                                     finish();
+                                } else{
+                                    Log.d("로그인여부",response);
+                                    Toast.makeText(LoginActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         },

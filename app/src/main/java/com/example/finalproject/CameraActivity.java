@@ -155,7 +155,7 @@ public class CameraActivity extends AppCompatActivity{
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.v("hhd",error);
+                                    Log.v("hhd","error");
                                 }
                             }
                     ){

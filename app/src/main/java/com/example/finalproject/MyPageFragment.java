@@ -13,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +45,7 @@ public class MyPageFragment extends Fragment {
     }
 
 
-    TextView tv_mypage_id, tv_mypage_point;
+    TextView tv_mypage_id, tv_mypage_point, tv_update_reg;
     EditText edit_mypage_pw, edit_mypage_phone, edit_mypage_region;
     Button btn_mypage_point, btn_mypage_update;
     String loginId, loginPoint, loginPw,loginPhone,loginRegion;
@@ -49,6 +53,11 @@ public class MyPageFragment extends Fragment {
     Intent point_intent;
     RequestQueue requestQueue;
     Context activity;
+
+    String loginReg;
+    String region = "";
+    Spinner spinner_update_region;
+    ArrayList<String> regions;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,9 +68,21 @@ public class MyPageFragment extends Fragment {
         activity = container.getContext();
         tv_mypage_id = fragment.findViewById(R.id.tv_mypage_id);
         tv_mypage_point = fragment.findViewById(R.id.tv_mypage_point);
+        tv_update_reg = fragment.findViewById(R.id.tv_update_reg);
         edit_mypage_pw = fragment.findViewById(R.id.edit_mypage_pw);
         edit_mypage_phone = fragment.findViewById(R.id.edit_mypage_phone);
-        edit_mypage_region = fragment.findViewById(R.id.edit_mypage_region);
+
+        spinner_update_region=fragment.findViewById(R.id.spinner_update_region);
+
+        //지역 선택 스피너
+        regions = new ArrayList<>();
+        regions.add("지역을 선택하세요");
+        regions.add("광산구");
+        regions.add("남구");
+        regions.add("동구");
+        regions.add("북구");
+        regions.add("서구");
+
         btn_mypage_point = fragment.findViewById(R.id.btn_mypage_point);
         btn_mypage_update = fragment.findViewById(R.id.btn_mypage_update);
         img_mypage_logout = fragment.findViewById(R.id.img_mypage_logout);
@@ -78,23 +99,53 @@ public class MyPageFragment extends Fragment {
             // 하단 비번, 전번, 지역
             String loginPw = extra.getString("loginPw");
             String loginPhone = extra.getString("loginPhone");
-            String loginReg = extra.getString("loginRegion");
+            loginReg = extra.getString("loginRegion");
 
             tv_mypage_id.setText(loginId);
             tv_mypage_point.setText(loginPoint);
 
             edit_mypage_pw.setText(loginPw);
             edit_mypage_phone.setText(loginPhone);
-            edit_mypage_region.setText(loginReg);
 
         }
+
+
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_dropdown_item,regions);
+        spinner_update_region.setAdapter(arrayAdapter);
+
+        switch (loginReg) {
+            case "광산구":  spinner_update_region.setSelection(1);
+                break;
+            case "남구":  spinner_update_region.setSelection(2);
+                break;
+            case "동구":  spinner_update_region.setSelection(3);
+                break;
+            case "북구":  spinner_update_region.setSelection(4);
+                break;
+            case "서구":  spinner_update_region.setSelection(5);
+                break;
+        }
+        spinner_update_region.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+                region = parent.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         btn_mypage_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String UpdateId = loginId;
                 String UpdatePw = edit_mypage_pw.getText().toString();
-                String UpdateRegion = edit_mypage_region.getText().toString();
+                String UpdateRegion = spinner_update_region.getSelectedItem().toString();
                 String UpdatePhone = edit_mypage_phone.getText().toString();
 
                 String server_url="http://222.102.43.79:8088/AndroidServer/UpdateController";

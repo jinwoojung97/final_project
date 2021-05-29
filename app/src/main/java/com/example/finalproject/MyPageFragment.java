@@ -107,33 +107,30 @@ public class MyPageFragment extends Fragment {
             edit_mypage_pw.setText(loginPw);
             edit_mypage_phone.setText(loginPhone);
 
-            switch (loginReg) {
-                case "광산구":  spinner_update_region.setSelection(1);
-                    break;
-                case "남구":  spinner_update_region.setSelection(2);
-                    break;
-                case "동구":  spinner_update_region.setSelection(3);
-                    break;
-                case "북구":  spinner_update_region.setSelection(4);
-                    break;
-                case "서구":  spinner_update_region.setSelection(5);
-                    break;
-            }
         }
+
 
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_dropdown_item,regions);
         spinner_update_region.setAdapter(arrayAdapter);
+
+        switch (loginReg) {
+            case "광산구":  spinner_update_region.setSelection(1);
+                break;
+            case "남구":  spinner_update_region.setSelection(2);
+                break;
+            case "동구":  spinner_update_region.setSelection(3);
+                break;
+            case "북구":  spinner_update_region.setSelection(4);
+                break;
+            case "서구":  spinner_update_region.setSelection(5);
+                break;
+        }
         spinner_update_region.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
-                if(parent.getItemAtPosition(i).equals("지역을 선택하세요")){
-                    tv_update_reg.setText("현재 지역 : " + loginReg);
-                }else{
-                    tv_update_reg.setText("현재 지역 : " + loginReg);
-                    region = parent.getItemAtPosition(i).toString();
-                }
-
+                region = parent.getItemAtPosition(i).toString();
             }
 
             @Override

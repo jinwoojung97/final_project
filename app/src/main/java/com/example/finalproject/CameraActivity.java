@@ -125,16 +125,16 @@ public class CameraActivity extends AppCompatActivity{
 
                     Bitmap bitmap = Bitmap.createBitmap(bitmaporigin, 0, 0,
                             bitmaporigin.getWidth(), bitmaporigin.getHeight(), matrix, true);
-                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,672,1008,true);
+                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,672,896,true);
                     //사진크기 줄이기
 
                     // bit map 전송하기
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    resize.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+                    resize.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
                     String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                     Log.v("hhd", encoded);
-                    String server_url ="http://222.102.43.79:9000/requestImg";
+                    String server_url ="http://220.95.45.162:9000/requestImg";
                     Log.v("hhd", "step1");
 
                     StringRequest request = new StringRequest(
@@ -144,9 +144,9 @@ public class CameraActivity extends AppCompatActivity{
                                 @Override
                                 public void onResponse(String response) {
                                     // 가입 성공 시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
-                                    Log.v("hhd", response);
+                                    Log.v("hhd","리스폰스 :"+ response);
 
-                                    String photo_url_str = "http://222.102.43.79:9000/showImg/"+response;
+                                    String photo_url_str = "http://220.95.45.162:9000/showImg/"+response;
 
                                     new DownloadImageTask(img_capture)
                                             .execute(photo_url_str);

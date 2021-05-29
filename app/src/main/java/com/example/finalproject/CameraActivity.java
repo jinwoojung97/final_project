@@ -144,7 +144,7 @@ public class CameraActivity extends AppCompatActivity{
                                 @Override
                                 public void onResponse(String response) {
                                     // 가입 성공 시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
-                                    Log.v("hhd", response);
+                                    Log.v("hhd","리스폰스 :"+ response);
 
                                     String photo_url_str = "http://220.95.45.162:9000/showImg/"+response;
 
@@ -155,7 +155,7 @@ public class CameraActivity extends AppCompatActivity{
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.v("hhd",error.getMessage());
+                                    Log.v("hhd",error);
                                 }
                             }
                     ){
@@ -199,7 +199,7 @@ public class CameraActivity extends AppCompatActivity{
                     cameraView.setVisibility(View.INVISIBLE);
 
                     // 아래 부분 주석을 풀 경우 사진 촬영 후에도 다시 프리뷰를 돌릴수 있음
-                    camera.startPreview();
+                    //camera.startPreview();
                 } catch (Exception e) {
                     Log.e("SampleCapture", "Failed to insert image.", e);
                 }

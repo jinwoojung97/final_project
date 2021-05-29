@@ -125,12 +125,12 @@ public class CameraActivity extends AppCompatActivity{
 
                     Bitmap bitmap = Bitmap.createBitmap(bitmaporigin, 0, 0,
                             bitmaporigin.getWidth(), bitmaporigin.getHeight(), matrix, true);
-                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,672,1008,true);
+                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,672,896,true);
                     //사진크기 줄이기
 
                     // bit map 전송하기
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    resize.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+                    resize.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
                     String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                     Log.v("hhd", encoded);
@@ -155,7 +155,7 @@ public class CameraActivity extends AppCompatActivity{
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.v("hhd","error");
+                                    Log.v("hhd",error.getMessage());
                                 }
                             }
                     ){
@@ -199,7 +199,7 @@ public class CameraActivity extends AppCompatActivity{
                     cameraView.setVisibility(View.INVISIBLE);
 
                     // 아래 부분 주석을 풀 경우 사진 촬영 후에도 다시 프리뷰를 돌릴수 있음
-                    //camera.startPreview();
+                    camera.startPreview();
                 } catch (Exception e) {
                     Log.e("SampleCapture", "Failed to insert image.", e);
                 }

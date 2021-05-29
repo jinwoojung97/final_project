@@ -134,7 +134,7 @@ public class CameraActivity extends AppCompatActivity{
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
                     String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                     Log.v("hhd", encoded);
-                    String server_url ="http://222.102.43.79:9000/requestImg";
+                    String server_url ="http://220.95.45.162:9000/requestImg";
                     Log.v("hhd", "step1");
 
                     StringRequest request = new StringRequest(
@@ -146,7 +146,7 @@ public class CameraActivity extends AppCompatActivity{
                                     // 가입 성공 시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
                                     Log.v("hhd", response);
 
-                                    String photo_url_str = "http://222.102.43.79:9000/showImg/"+response;
+                                    String photo_url_str = "http://220.95.45.162:9000/showImg/"+response;
 
                                     new DownloadImageTask(img_capture)
                                             .execute(photo_url_str);

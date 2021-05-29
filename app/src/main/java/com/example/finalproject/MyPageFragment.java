@@ -54,6 +54,7 @@ public class MyPageFragment extends Fragment {
     RequestQueue requestQueue;
     Context activity;
 
+    String loginReg;
     String region = "";
     Spinner spinner_update_region;
     ArrayList<String> regions;
@@ -98,7 +99,7 @@ public class MyPageFragment extends Fragment {
             // 하단 비번, 전번, 지역
             String loginPw = extra.getString("loginPw");
             String loginPhone = extra.getString("loginPhone");
-            String loginReg = extra.getString("loginRegion");
+            loginReg = extra.getString("loginRegion");
 
             tv_mypage_id.setText(loginId);
             tv_mypage_point.setText(loginPoint);
@@ -107,15 +108,16 @@ public class MyPageFragment extends Fragment {
             edit_mypage_phone.setText(loginPhone);
         }
 
+
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_dropdown_item,regions);
         spinner_update_region.setAdapter(arrayAdapter);
         spinner_update_region.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
                 if(parent.getItemAtPosition(i).equals("지역을 선택하세요")){
-                    tv_update_reg.setText("지역");
+                    tv_update_reg.setText("현재 지역 : " + loginReg);
                 }else{
-                    tv_update_reg.setText("지역 : "+parent.getItemAtPosition(i));
+                    tv_update_reg.setText("현재 지역 : " + loginReg);
                     region = parent.getItemAtPosition(i).toString();
                 }
 

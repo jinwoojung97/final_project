@@ -76,25 +76,24 @@ public class PopupActivity extends Activity {
 
          popup_intent = getIntent();
 
-
             if ("1".equals(result)) {
                 setResult(RESULT_OK, popup_intent);
-                 popup_intent.putExtra("result", "정답 500포인트 적금");
+                popup_intent.putExtra("result", "문제를 다 푸셨군요! 500포인트 적립!!");
 
-                String server_url="http://222.102.43.79:8088/AndroidServer/QuizController";
+                String server_url = "http://222.102.43.79:8088/AndroidServer/QuizController";
 
-                StringRequest request=new StringRequest(
+                StringRequest request = new StringRequest(
                         Request.Method.POST,
                         server_url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
 
-                                if(response.equals("0")){
-                                    Log.d("포인트 적립 ","실패");
+                                if (response.equals("0")) {
+                                    Log.d("포인트 적립 ", "실패");
                                     //Toast.makeText(PopupActivity.this,"포인트 적립 실패",Toast.LENGTH_SHORT).show();
-                                } else{
-                                    Log.d("포인트 적립","성공");
+                                } else {
+                                    Log.d("포인트 적립", "성공");
 //                                    popup_intent.putExtra("result", "성공 100포인트 적금");
 //                                    login_reset();
                                     //Toast.makeText(PopupActivity.this,response,Toast.LENGTH_SHORT).show();
@@ -105,13 +104,13 @@ public class PopupActivity extends Activity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 //Toast.makeText(LoginActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();
-                                Log.d("포인트 적립 ","실패");
+                                Log.d("포인트 적립 ", "실패");
                             }
                         }
-                ){
+                ) {
                     @Nullable
                     @Override
-                    protected Map<String,String> getParams() throws AuthFailureError {
+                    protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("login_id", loginId);
 
@@ -120,23 +119,25 @@ public class PopupActivity extends Activity {
                     }
                 };
                 requestQueue.add(request);
+            }else if ("2".equals(result)){
+                setResult(RESULT_CANCELED,popup_intent);
+                popup_intent.putExtra("result","동참해주셔야합니다!!");
 
-
-            }
-
-
-            else if ("2".equals(result)) {
+            }else if ("3".equals(result)){
                 setResult(RESULT_CANCELED, popup_intent);
-                popup_intent.putExtra("result", "실패 포인트 적금 실패");
-            } else if ("3".equals(result)) {
+                popup_intent.putExtra("result","끝까지 풀어주세요!");
+
+            }else if ("4".equals(result)) {
                 setResult(RESULT_CANCELED, popup_intent);
-                popup_intent.putExtra("result", "이미 적립되었습니다");
+                popup_intent.putExtra("result", "다음 문제!");
+
+            }else if("5".equals(result)){
+                setResult(RESULT_CANCELED, popup_intent);
+                popup_intent.putExtra("result", "문제 다 푸셨어요!");
             }
             //액티비티(팝업) 닫기
 
             finish();
-
-
     }
 
 

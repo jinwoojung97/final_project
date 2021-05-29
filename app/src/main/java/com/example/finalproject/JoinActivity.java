@@ -102,7 +102,7 @@ public class JoinActivity extends AppCompatActivity {
                 String join_phone = edit_join_phone.getText().toString();
                 String join_region = tv_region.getText().toString();
 
-                if (join_id.length() == 0 || join_pw.length() == 0 || join_phone.length() == 0 || join_region.length() == 0) {
+                if (join_id.length() == 0 || join_pw.length() == 0 || join_phone.length() == 0 || region.length() == 0) {
                     Toast.makeText(JoinActivity.this, "필수 입력값을 작성해주세요!", Toast.LENGTH_SHORT).show();
                 }else{
                     //서버주소

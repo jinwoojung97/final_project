@@ -79,31 +79,16 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView6"
                 app:layout_constraintVertical_bias="0.814" />
 
-            <TextView
-                android:id="@+id/tv_quiz"
-                android:layout_width="296dp"
-                android:layout_height="91dp"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/mainimg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.521"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/mainimg"
-                app:layout_constraintVertical_bias="0.272" />
-
             <ImageView
                 android:id="@+id/mainimg"
                 android:layout_width="360dp"
                 android:layout_height="190dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/quiz1"
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginEnd="26dp"
+                android:layout_marginRight="26dp"
+                android:src="@drawable/quiz0"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.454"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
@@ -123,7 +108,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/mainimg"
-                app:layout_constraintVertical_bias="0.887" />
+                app:layout_constraintVertical_bias="0.913" />
 
             <Button
                 android:id="@+id/btn_no"

@@ -29,17 +29,18 @@ public class HomeFragment extends Fragment {
 
     private final int POINTDATA = 1001;
 
-    TextView tv_quiz, tv_region, tv_rank;
+    TextView tv_region, tv_rank;
     Button btn_camera, btn_yes, btn_no;
     ImageView img_rank;
     Context activity;
     int question_count; // 자동으로 0 잡힘
+    int today_end;
     ImageView mainimg;
     String loginId,loginPw, loginRegion;
 
 
     // 퀴즈 문제
-    int[] question_list = {R.drawable.quiz1, R.drawable.quiz2, R.drawable.quiz3, R.drawable.quiz4,R.drawable.quiz5,R.drawable.quiz6,R.drawable.quizend};
+    int[] question_list = {R.drawable.quiz0,R.drawable.quiz1, R.drawable.quiz2, R.drawable.quiz3, R.drawable.quiz4,R.drawable.quiz5,R.drawable.quiz6,R.drawable.quizend};
     int img = 0;
 
     @Override
@@ -49,7 +50,6 @@ public class HomeFragment extends Fragment {
 
         activity = container.getContext();
 
-        tv_quiz = fragment.findViewById(R.id.tv_quiz);
         tv_region = fragment.findViewById(R.id.tv_region);
 
         tv_rank = fragment.findViewById(R.id.tv_rank);
@@ -59,6 +59,8 @@ public class HomeFragment extends Fragment {
         img_rank = fragment.findViewById(R.id.img_rank);
         mainimg = fragment.findViewById(R.id.mainimg);
 
+
+        //문제를 풀고 확인 누른다음 포인트창 갔다오면 다시 0번째부터 보여줬는데 0번째가 아닌 다음 문제를 보여주기위한 코드
         if(img != 0) {
             mainimg.setImageResource(question_list[img]);
         }
@@ -72,7 +74,8 @@ public class HomeFragment extends Fragment {
 
 
         // 퀴즈 정답
-        String[] question_c_list = {"입구가 조금이라도 깨지면 재사용이 \n " +
+        String[] question_c_list = {"동참해주셔서 감사합니다\n",
+                "입구가 조금이라도 깨지면 재사용이 \n " +
                 "불가능하기 때문에 \n" +
                 "입구 보호를 위해 뚜껑을 \n" +
                 "끼운 채로 배출하면 좋다", //1번end
@@ -109,10 +112,16 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        // 오늘의 퀴즈 문제 랜덤으로 보여주기
 
 
-        // 팝업창 생성
+        // 문제 다 풀고나서 버튼 사라지게하기
+        if(today_end == 1){
+            btn_yes.setVisibility(View.GONE);
+            btn_no.setVisibility(View.GONE);
+        }
+
+
+        // 퀴즈 설명 팝업창 생성
         btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,91 +129,105 @@ public class HomeFragment extends Fragment {
                 popup_intent.putExtra("loginId",loginId);
                 popup_intent.putExtra("loginPw",loginPw);
 
-                if (question_count == 0) {
-                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "1");
-
+                if (question_count == 0){
+                    popup_intent.putExtra("data","" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result","3");
                     startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 6) {
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
                     }
                     mainimg.setImageResource(question_list[img]);
-                } else if (question_count == 1) {
+                }else if (question_count == 1) {
                     popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "3");
+                    popup_intent.putExtra("result", "4");
+
                     startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 6) {
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
                     }
                     mainimg.setImageResource(question_list[img]);
                 } else if (question_count == 2) {
-                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "2");
+                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "4");
                     startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 6) {
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
                     }
                     mainimg.setImageResource(question_list[img]);
                 } else if (question_count == 3) {
-                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "2");
+                    popup_intent.putExtra("data", "오답입니다\n"  + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "4");
                     startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 6) {
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
                     }
                     mainimg.setImageResource(question_list[img]);
-                }else if (question_count == 4) {
+                } else if (question_count == 4) {
                     popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "2");
+                    popup_intent.putExtra("result", "4");
                     startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 6) {
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
                     }
                     mainimg.setImageResource(question_list[img]);
                 }else if (question_count == 5) {
-                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "3");
+                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "4");
                     startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 6) {
+                    if (img == 7) {
+                        img = 0;
+                    } else {
+                        img++;
+                    }
+                    mainimg.setImageResource(question_list[img]);
+                }else if (question_count == 6) {
+                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "2");
+                    startActivityForResult(popup_intent, POINTDATA);
+                    Log.v("test", question_count + "");
+
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
                     }
 
-                    btn_yes.setEnabled(false);
-                    btn_no.setEnabled(false);
+                    today_end = 1;
+                    btn_yes.setVisibility(View.GONE);
+                    btn_no.setVisibility(View.GONE);
 
                     mainimg.setImageResource(question_list[img]);
-                }else if(question_count == 6){
+                }else if(question_count == 7){
 
-                    if (img == 6) {
+                    if (img == 7) {
 
                         img = 0;
                     } else {
                         img++;
                     }
+
                     mainimg.setImageResource(question_list[img]);
 
                 }
@@ -218,22 +241,15 @@ public class HomeFragment extends Fragment {
                 Intent popup_intent = new Intent(getContext(), PopupActivity.class);
                 popup_intent.putExtra("loginId",loginId);
 
-                if (question_count == 0) {
-                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "2");
+                if (question_count == 0){
+                    popup_intent.putExtra("data", "동참해주세요");
+                    popup_intent.putExtra("result","2");
                     startActivityForResult(popup_intent, POINTDATA);
-                    if (img == 6) {
-                        img = 0;
-                    } else {
-                        img++;
-                    }
-                    mainimg.setImageResource(question_list[img]);
-                }
-                else if (question_count == 1) {
+                }else if (question_count == 1) {
                     popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "2");
+                    popup_intent.putExtra("result", "4");
                     startActivityForResult(popup_intent, POINTDATA);
-                    if (img == 6) {
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
@@ -241,10 +257,10 @@ public class HomeFragment extends Fragment {
                     mainimg.setImageResource(question_list[img]);
                 }
                 else if (question_count == 2) {
-                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "3");
+                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "4");
                     startActivityForResult(popup_intent, POINTDATA);
-                    if (img == 6) {
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
@@ -253,45 +269,57 @@ public class HomeFragment extends Fragment {
                 }
                 else if (question_count == 3) {
                     popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "3");
+                    popup_intent.putExtra("result", "4");
                     startActivityForResult(popup_intent, POINTDATA);
-                    if (img == 6) {
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
                     }
                     mainimg.setImageResource(question_list[img]);
-                }else if (question_count == 4) {
+                }
+                else if (question_count == 4) {
                     popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "3");
+                    popup_intent.putExtra("result", "4");
                     startActivityForResult(popup_intent, POINTDATA);
-                    Log.v("test", question_count + "");
-
-                    if (img == 6) {
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
                     }
                     mainimg.setImageResource(question_list[img]);
                 }else if (question_count == 5) {
-                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "3");
+                    popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "4");
                     startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
-                    if (img == 6) {
+                    if (img == 7) {
+                        img = 0;
+                    } else {
+                        img++;
+                    }
+                    mainimg.setImageResource(question_list[img]);
+                }else if (question_count == 6) {
+                    popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
+                    popup_intent.putExtra("result", "2");
+                    startActivityForResult(popup_intent, POINTDATA);
+                    Log.v("test", question_count + "");
+
+                    if (img == 7) {
                         img = 0;
                     } else {
                         img++;
                     }
 
-                    btn_yes.setEnabled(false);
-                    btn_no.setEnabled(false);
+                    today_end = 1;
+                    btn_yes.setVisibility(View.GONE);
+                    btn_no.setVisibility(View.GONE);
 
                     mainimg.setImageResource(question_list[img]);
-                }else if(question_count == 6){
+                }else if(question_count == 7){
 
-                    if (img == 6) {
+                    if (img == 7) {
                         img = 0;
 
                     } else {

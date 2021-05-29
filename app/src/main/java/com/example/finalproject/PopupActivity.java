@@ -131,9 +131,6 @@ public class PopupActivity extends Activity {
                 setResult(RESULT_CANCELED, popup_intent);
                 popup_intent.putExtra("result", "다음 문제!");
 
-            }else if("5".equals(result)){
-                setResult(RESULT_CANCELED, popup_intent);
-                popup_intent.putExtra("result", "문제 다 푸셨어요!");
             }
             //액티비티(팝업) 닫기
 

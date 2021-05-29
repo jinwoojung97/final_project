@@ -204,7 +204,7 @@ public class HomeFragment extends Fragment {
                     mainimg.setImageResource(question_list[img]);
                 }else if (question_count == 6) {
                     popup_intent.putExtra("data", "정답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "2");
+                    popup_intent.putExtra("result", "1");
                     startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 
@@ -302,7 +302,7 @@ public class HomeFragment extends Fragment {
                     mainimg.setImageResource(question_list[img]);
                 }else if (question_count == 6) {
                     popup_intent.putExtra("data", "오답입니다\n" + question_c_list[question_count++]);
-                    popup_intent.putExtra("result", "2");
+                    popup_intent.putExtra("result", "1");
                     startActivityForResult(popup_intent, POINTDATA);
                     Log.v("test", question_count + "");
 

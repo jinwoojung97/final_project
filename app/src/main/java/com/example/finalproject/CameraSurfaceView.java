@@ -57,7 +57,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     public void surfaceDestroyed(SurfaceHolder holder) {
         camera.stopPreview();
-        camera.release();
+        //camera.release();
         camera = null;
     }
 

@@ -26,9 +26,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -126,7 +128,7 @@ public class CameraActivity extends AppCompatActivity{
 
                     Bitmap bitmap = Bitmap.createBitmap(bitmaporigin, 0, 0,
                             bitmaporigin.getWidth(), bitmaporigin.getHeight(), matrix, true);
-                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,672,672,true);
+                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,672,896,true);
                     //사진크기 줄이기
 
                     // bit map 전송하기
@@ -150,8 +152,12 @@ public class CameraActivity extends AppCompatActivity{
 
                                         String photo_url_str = "http://220.95.45.162:9000/showImg/"+response;
 
+
+
                                         new DownloadImageTask(img_capture)
                                                 .execute(photo_url_str);
+
+                                        Toast.makeText(getApplicationContext(), "분리수거가 필요합니다!", Toast.LENGTH_LONG).show();
 
                                     }catch (Exception e){
                                         e.printStackTrace();
@@ -163,6 +169,7 @@ public class CameraActivity extends AppCompatActivity{
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Log.v("hhd",error.toString());
+                                    error.printStackTrace();
 //                                    if (error == null || error.networkResponse == null) {
 //                                        return;
 //                                    }
@@ -191,6 +198,25 @@ public class CameraActivity extends AppCompatActivity{
                             return params;
                         }
                     };
+
+
+                    request.setRetryPolicy(new RetryPolicy() {
+                        @Override
+                        public int getCurrentTimeout() {
+                            return 7000;
+                        }
+
+                        @Override
+                        public int getCurrentRetryCount() {
+                            return 7000;
+                        }
+
+                        @Override
+                        public void retry(VolleyError error) throws VolleyError {
+                            Log.v("hhd","volley error : "+ error.getMessage());
+                        }
+                    });
+
                     requestQueue.add(request);
 
                     Log.v("hhd", "step2");

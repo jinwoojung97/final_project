@@ -55,7 +55,7 @@ public class CameraActivity extends AppCompatActivity{
 
     private Uri photoUri;//촬영한, 크롭된 이미지 경로를 담는 변수
     ImageView img_capture;
-    Button btn_capture, btn_back;
+    Button btn_capture;
     CameraSurfaceView cameraView;
     FrameLayout previewFrame;
     boolean crop;   //크롭사진이 생성 되었는지 여부
@@ -67,6 +67,8 @@ public class CameraActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+
         init();
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -91,6 +93,8 @@ public class CameraActivity extends AppCompatActivity{
     }
 
 
+
+
     //촬영버튼의 리스너
     public void onClickTakeImage(View v){
         switch (v.getId()) {
@@ -98,11 +102,11 @@ public class CameraActivity extends AppCompatActivity{
                 takePhoto();//카메라면 사진 찍기
                 break;
 
+
         }
     }
-//    public void returnCapture(View v){
-//
-//    }
+
+
 
     //현재 보여지는 미리보기 화면을 촬영
     private void takePhoto(){
@@ -199,7 +203,7 @@ public class CameraActivity extends AppCompatActivity{
                     cameraView.setVisibility(View.INVISIBLE);
 
                     // 아래 부분 주석을 풀 경우 사진 촬영 후에도 다시 프리뷰를 돌릴수 있음
-                    camera.startPreview();
+//                    camera.startPreview();
                 } catch (Exception e) {
                     Log.e("SampleCapture", "Failed to insert image.", e);
                 }

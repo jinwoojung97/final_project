@@ -26,11 +26,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -40,7 +38,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -58,7 +55,7 @@ public class CameraActivity extends AppCompatActivity{
 
     private Uri photoUri;//촬영한, 크롭된 이미지 경로를 담는 변수
     ImageView img_capture;
-    Button btn_capture, btn_back;
+    Button btn_capture;
     CameraSurfaceView cameraView;
     FrameLayout previewFrame;
     boolean crop;   //크롭사진이 생성 되었는지 여부
@@ -70,6 +67,8 @@ public class CameraActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+
         init();
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -94,6 +93,8 @@ public class CameraActivity extends AppCompatActivity{
     }
 
 
+
+
     //촬영버튼의 리스너
     public void onClickTakeImage(View v){
         switch (v.getId()) {
@@ -101,11 +102,11 @@ public class CameraActivity extends AppCompatActivity{
                 takePhoto();//카메라면 사진 찍기
                 break;
 
+
         }
     }
-//    public void returnCapture(View v){
-//
-//    }
+
+
 
     //현재 보여지는 미리보기 화면을 촬영
     private void takePhoto(){
@@ -133,7 +134,7 @@ public class CameraActivity extends AppCompatActivity{
 
                     // bit map 전송하기
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    resize.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+                    resize.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
                     String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                     Log.v("hhd", encoded);
@@ -146,46 +147,19 @@ public class CameraActivity extends AppCompatActivity{
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    try{
+                                    // 가입 성공 시 response 변수에 "1"값이 저장됨 실패시 "0"값이 저장됨
+                                    Log.v("hhd","리스폰스 :"+ response);
 
-                                        Log.v("hhd","리스폰스 :"+ response);
+                                    String photo_url_str = "http://220.95.45.162:9000/showImg/"+response;
 
-                                        String photo_url_str = "http://220.95.45.162:9000/showImg/"+response;
-
-
-
-                                        new DownloadImageTask(img_capture)
-                                                .execute(photo_url_str);
-
-                                        Toast.makeText(getApplicationContext(), "분리수거가 필요합니다!", Toast.LENGTH_LONG).show();
-
-                                    }catch (Exception e){
-                                        e.printStackTrace();
-                                    }
-
+                                    new DownloadImageTask(img_capture)
+                                            .execute(photo_url_str);
                                 }
                             },
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.v("hhd",error.toString());
-                                    error.printStackTrace();
-//                                    if (error == null || error.networkResponse == null) {
-//                                        return;
-//                                    }
-//
-//                                    String body;
-//                                    //get status code here
-//                                    final String statusCode = String.valueOf(error.networkResponse.statusCode);
-//                                    //get response body and parse with appropriate encoding
-//                                    try {
-//                                        body = new String(error.networkResponse.data,"UTF-8");
-//                                        Log.v("hdd",body);
-//                                    } catch (UnsupportedEncodingException e) {
-//                                        // exception
-//                                        e.printStackTrace();
-//                                    }
-
+                                    Log.v("hhd",error.getMessage());
                                 }
                             }
                     ){
@@ -198,32 +172,13 @@ public class CameraActivity extends AppCompatActivity{
                             return params;
                         }
                     };
-
-
-                    request.setRetryPolicy(new RetryPolicy() {
-                        @Override
-                        public int getCurrentTimeout() {
-                            return 7000;
-                        }
-
-                        @Override
-                        public int getCurrentRetryCount() {
-                            return 7000;
-                        }
-
-                        @Override
-                        public void retry(VolleyError error) throws VolleyError {
-                            Log.v("hhd","volley error : "+ error.getMessage());
-                        }
-                    });
-
                     requestQueue.add(request);
 
                     Log.v("hhd", "step2");
                     //사진 원본 파일. 갤러리에서 보이며 /내장메모리/Pictures 에 저장.
                     img_name = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());   //이미지의 이름을 설정
                     String outUriStr = MediaStore.Images.Media.insertImage(getContentResolver(),//이미지 파일 생성
-                            resize, img_name, "Captured Image using Camera.");
+                            bitmap, img_name, "Captured Image using Camera.");
 
                     if (outUriStr == null) {
                         Log.d("SampleCapture", "Image insert failed.");
@@ -248,7 +203,7 @@ public class CameraActivity extends AppCompatActivity{
                     cameraView.setVisibility(View.INVISIBLE);
 
                     // 아래 부분 주석을 풀 경우 사진 촬영 후에도 다시 프리뷰를 돌릴수 있음
-                    //camera.startPreview();
+//                    camera.startPreview();
                 } catch (Exception e) {
                     Log.e("SampleCapture", "Failed to insert image.", e);
                 }
@@ -258,113 +213,113 @@ public class CameraActivity extends AppCompatActivity{
 
 
 
-//    //이미지 파일의 밑바탕 만들기
-//    private File createImageFile() throws IOException {
-//        String imageFileName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());                    //파일명
-//        File storageDir = new File(Environment.getExternalStorageDirectory() + cropImageDiretory);//내장메모리/폴더명 에 저장
-//        if (!storageDir.exists()) {
-//            storageDir.mkdirs();
-//        }
-//        File image = File.createTempFile(imageFileName, ".png", storageDir);
-//        mCurrentPhotoPath = "file:" + image.getAbsolutePath();  //절대경로로 URI 작성, 저장
-//        return image;
-//    }
+    //이미지 파일의 밑바탕 만들기
+    private File createImageFile() throws IOException {
+        String imageFileName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());                    //파일명
+        File storageDir = new File(Environment.getExternalStorageDirectory() + cropImageDiretory);//내장메모리/폴더명 에 저장
+        if (!storageDir.exists()) {
+            storageDir.mkdirs();
+        }
+        File image = File.createTempFile(imageFileName, ".png", storageDir);
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();  //절대경로로 URI 작성, 저장
+        return image;
+    }
 
     //    이미지 크롭 함수.
 //    photoUri 의 경로에 있는 사진 파일을 정사각형 모양으로 크롭, 저장하고 photoUri에 경로를 담는다.
-//    public void cropImage() {
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            this.grantUriPermission("com.android.camera", photoUri,
-//                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//        }
-//        Intent intent = new Intent("com.android.camera.action.CROP");
-//        intent.setDataAndType(photoUri, "image/*");
-//
-//        List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent, 0);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            grantUriPermission(list.get(0).activityInfo.packageName, photoUri,
-//                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//        }
-//        int size = list.size();
-//        if (size == 0) {
-//            Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
-//            return;
-//        } else {
-//            Toast.makeText(this, "용량이 큰 사진의 경우 시간이 오래 걸릴 수 있습니다.", Toast.LENGTH_SHORT).show();
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//            }
-//            intent.putExtra("crop", "true");
-//            intent.putExtra("aspectX", "max");
-//            intent.putExtra("aspectY", "max");
-//            intent.putExtra("scale", true);
-//            File croppedFileName = null;
-//            try {
-//                croppedFileName = createImageFile();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            File folder = new File(Environment.getExternalStorageDirectory() + cropImageDiretory);
-//            File tempFile = new File(folder.toString(), croppedFileName.getName());
-//
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//sdk 24 이상, 누가(7.0)
-//                photoUri = FileProvider.getUriForFile(getApplicationContext(),// 7.0에서 바뀐 부분은
-//                        BuildConfig.APPLICATION_ID + ".provider", tempFile);
-//            } else {//sdk 23 이하, 7.0 미만
-//                photoUri = Uri.fromFile(tempFile);
-//            }
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//            }
-//
-//            intent.putExtra("return-data", false);
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-//            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-//
-//            Intent i = new Intent(intent);
-//            ResolveInfo res = list.get(0);
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//                i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//
-//                grantUriPermission(res.activityInfo.packageName, photoUri,
-//                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//            }
-//            i.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-//            startActivityForResult(i, CROP_FROM_IMAGE);
-//        }
-//    }
+    public void cropImage() {
 
-//    //사진 크롭이나 앨범에서 사진 가져오는것의 결과 처리함수.
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode != RESULT_OK) {
-//            Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        if (requestCode == PICK_FROM_ALBUM) {//앨범에서 사진 가져오기
-//            if (data == null) {
-//                return;
-//            }
-//            photoUri = data.getData();
-//            cropImage();
-//        } else if (requestCode == CROP_FROM_IMAGE) {//크롭
-//            img_capture.setImageURI(null);//초기화
-//            img_capture.setImageURI(photoUri);//이 photoUri가 크롭된 이미지 파일의 경로
-//
-//            img_capture.setVisibility(View.VISIBLE);
-//            cameraView.setVisibility(View.INVISIBLE);
-//        }
-//    }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.grantUriPermission("com.android.camera", photoUri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(photoUri, "image/*");
+
+        List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            grantUriPermission(list.get(0).activityInfo.packageName, photoUri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        int size = list.size();
+        if (size == 0) {
+            Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            Toast.makeText(this, "용량이 큰 사진의 경우 시간이 오래 걸릴 수 있습니다.", Toast.LENGTH_SHORT).show();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            }
+            intent.putExtra("crop", "true");
+            intent.putExtra("aspectX", "max");
+            intent.putExtra("aspectY", "max");
+            intent.putExtra("scale", true);
+            File croppedFileName = null;
+            try {
+                croppedFileName = createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            File folder = new File(Environment.getExternalStorageDirectory() + cropImageDiretory);
+            File tempFile = new File(folder.toString(), croppedFileName.getName());
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//sdk 24 이상, 누가(7.0)
+                photoUri = FileProvider.getUriForFile(getApplicationContext(),// 7.0에서 바뀐 부분은
+                        BuildConfig.APPLICATION_ID + ".provider", tempFile);
+            } else {//sdk 23 이하, 7.0 미만
+                photoUri = Uri.fromFile(tempFile);
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            }
+
+            intent.putExtra("return-data", false);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+
+            Intent i = new Intent(intent);
+            ResolveInfo res = list.get(0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+                grantUriPermission(res.activityInfo.packageName, photoUri,
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+            i.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+            startActivityForResult(i, CROP_FROM_IMAGE);
+        }
+    }
+
+    //사진 크롭이나 앨범에서 사진 가져오는것의 결과 처리함수.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (requestCode == PICK_FROM_ALBUM) {//앨범에서 사진 가져오기
+            if (data == null) {
+                return;
+            }
+            photoUri = data.getData();
+            cropImage();
+        } else if (requestCode == CROP_FROM_IMAGE) {//크롭
+            img_capture.setImageURI(null);//초기화
+            img_capture.setImageURI(photoUri);//이 photoUri가 크롭된 이미지 파일의 경로
+
+            img_capture.setVisibility(View.VISIBLE);
+            cameraView.setVisibility(View.INVISIBLE);
+        }
+    }
 
     public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
